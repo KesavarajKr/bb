@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class ApiController extends Controller
 {
     //
@@ -51,7 +52,7 @@ class ApiController extends Controller
             //     'message' => 'Register Successfully',
             // ]);
 
-            return ["Result" => "User Created"];
+            return ["message" => "User Created"];
         } else {
             // return response()->json([
             //     // 'status' => '200',
@@ -63,103 +64,28 @@ class ApiController extends Controller
 
 
 
-    public function createzone(Request $request)
-    {
-        try {
-            $validated = $request->validate([
-                'zoneid' => 'required',
-                'mainzone' => 'required',
-                'subzone' => 'required',
-            ]);
-
-            $data =   Zone::create($request->all());
-
-            return ["Result" => "Zone Created", "data" => $data];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-
-    // Create Area
-    public function createArea(Request $request)
-    {
-        try {
-            $request->validate([
-                'areaname' => 'required',
-            ]);
-
-
-            $data = Area::create($request->all());
-
-            return ["Result" => "Area Created", "data" => $data];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-
-    // UpdateArea
-    public function updateArea(Request $request, $id)
-    {
-
-        try {
-            $request->validate([
-                'areaname' => 'required',
-            ]);
-            $data = Area::findOrFail($id);
-            $data->update($request->all());
-
-            return ["Result" => "Area Updated", "data" => $data];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-    // View Area
-    public function viewArea($id)
-    {
-        try {
-            $data = Area::findOrFail($id);
-            return ["Result" => "Area", "data" => $data];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-
-
-    // To delete Area
-    public function deleteArea($id)
-    {
-        try {
-            $data = Area::findOrFail($id);
-            $data->delete();
-
-            return ["Result" => "Area Deleted", "data" => $data];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
-    }
-
-
 
 
     // Create Zone
     public function createzone(Request $request)
     {
+
         try {
             $request->validate([
-                'zoneid' => 'required',
+                'zoneid' => 'required|numeric',
             ]);
-
-
-            $data = Zone::create($request->all());
-
-            return ["Result" => "Zone Created", "data" => $data];
         } catch (Exception $e) {
-            return $e->getMessage();
+            return response(["status" => 500,  "message" => "Zone id is required and should be numeric value"], 500);
         }
+        $zoneId  = "Zone_" . $request->input('zoneid');
+        try {
+            $data = Zone::create([
+                "zoneid" => $zoneId
+            ]);
+        } catch (Exception $e) {
+            return response(["message" => "Zone ID Already Exists", "status" => 500], 500);
+        }
+        return ["message" => "Zone Created", "data" => $data, "Status" => "200"];
     }
 
     // View Zone
@@ -167,10 +93,10 @@ class ApiController extends Controller
     {
         try {
             $data = Zone::findOrFail($id);
-            return ["Result" => "Zone Data", "data" => $data];
         } catch (Exception $e) {
-            return $e->getMessage();
+            return response(["message" => "Zone Id Not Found", "status" => 500], 500);
         }
+        return ["message" => "Zone Data", "data" => $data, "Status" => "200"];
     }
 
 
@@ -181,27 +107,28 @@ class ApiController extends Controller
 
         try {
             $request->validate([
-                'zoneid' => 'required',
+                'zoneid' => 'required|numeric',
             ]);
-            $data = Zone::findOrFail($id);
-            $data->update($request->all());
-
-            return ["Result" => "Zone Updated", "data" => $data];
         } catch (Exception $e) {
-            return $e->getMessage();
+            return response(["message" => "Zone id is required and should be numeric value", "status" => 500], 500);
         }
-    }
-
-    // View Area
-    public function viewzone($id)
-    {
         try {
             $data = Zone::findOrFail($id);
-            return ["Result" => "Zone Data", "data" => $data];
         } catch (Exception $e) {
-            return $e->getMessage();
+            return response(["status" => 500, "message" => "Given Id Does not Exists"], 500);
         }
+        $zoneId  = "Zone_" . $request->input('zoneid');
+        try {
+            $data->update([
+                "zoneid" => $zoneId
+            ]);
+        } catch (Exception $e) {
+            return response(["message" =>   "Zone id already Exists", "status" => 500], 500);
+        }
+        return ["message" => "Zone Updated", "data" => $data];
     }
+
+
 
 
 
@@ -210,10 +137,75 @@ class ApiController extends Controller
     {
         try {
             $data = Zone::findOrFail($id);
-            $data->delete();
-            return ["Result" => "Zone Deleted", "data" => $data];
         } catch (Exception $e) {
-            return $e->getMessage();
+            return response(["message" => "Invalid ID", "status" => 500], 500);
         }
+        $data->delete();
+        return ["message" => "Zone Deleted", "data" => $data];
     }
+
+
+
+
+
+    // Create Area
+    // public function createArea(Request $request)
+    // {
+    //     try {
+    //         $request->validate([
+    //             'areaname' => 'required',
+    //         ]);
+
+
+    //         $data = Area::create($request->all());
+
+    //         return ["message" => "Area Created", "data" => $data];
+    //     } catch (Exception $e) {
+    //         return $e->getMessage();
+    //     }
+    // }
+
+
+    // // UpdateArea
+    // public function updateArea(Request $request, $id)
+    // {
+
+    //     try {
+    //         $request->validate([
+    //             'areaname' => 'required',
+    //         ]);
+    //         $data = Area::findOrFail($id);
+    //         $data->update($request->all());
+
+    //         return ["message" => "Area Updated", "data" => $data];
+    //     } catch (Exception $e) {
+    //         return $e->getMessage();
+    //     }
+    // }
+
+    // // View Area
+    // public function viewArea($id)
+    // {
+    //     try {
+    //         $data = Area::findOrFail($id);
+    //         return ["message" => "Area", "data" => $data];
+    //     } catch (Exception $e) {
+    //         return $e->getMessage();
+    //     }
+    // }
+
+
+
+    // // To delete Area
+    // public function deleteArea($id)
+    // {
+    //     try {
+    //         $data = Area::findOrFail($id);
+    //         $data->delete();
+
+    //         return ["message" => "Area Deleted", "data" => $data];
+    //     } catch (Exception $e) {
+    //         return $e->getMessage();
+    //     }
+    // }
 }

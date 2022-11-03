@@ -21,17 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::POST('createuser', [ApiController::class, 'createuser']);
 
-// To create Area
-Route::POST('createarea', [ApiController::class, "createArea"]);
+// // To create Area
+// Route::POST('createarea', [ApiController::class, "createArea"]);
 
-// To view Area
-Route::get('area/{id}', [ApiController::class, "viewArea"]);
+// // To view Area
+// Route::get('area/{id}', [ApiController::class, "viewArea"]);
 
-// To Update Area
-Route::POST('updatearea/{id}', [ApiController::class, "updateArea"]);
+// // To Update Area
+// Route::POST('updatearea/{id}', [ApiController::class, "updateArea"]);
 
-// To Delete Area
-Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
+// // To Delete Area
+// Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
 
 
 // To create Zone
