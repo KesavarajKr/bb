@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Taluk;
 use App\Models\Zone;
 use Exception;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+use PHPUnit\Framework\Error;
 
 
 class ApiController extends Controller
@@ -16,6 +19,16 @@ class ApiController extends Controller
     public function invalidId()
     {
         return response(["message" => "Invalid ID", "status" => 500], 500);
+    }
+
+    public function validationInvalid($errors)
+    {
+        return response(["message" => $errors, "status" => 400], 400);
+    }
+
+    public function successResponse($data)
+    {
+        return response(["message" => "success", "data" => $data, "status" => 200]);
     }
 
 
@@ -76,8 +89,8 @@ class ApiController extends Controller
             $request->validate([
                 'zoneid' => 'required|numeric',
             ]);
-        } catch (Exception $e) {
-            return response(["status" => 500,  "message" => "Zone id is required and should be numeric value"], 500);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
         }
         $zoneId  = "Zone_" . $request->input('zoneid');
         try {
@@ -87,7 +100,7 @@ class ApiController extends Controller
         } catch (Exception $e) {
             return response(["message" => "Zone ID Already Exists", "status" => 500], 500);
         }
-        return ["message" => "Zone Created", "data" => $data, "Status" => "200"];
+        return $this->successResponse($data);
     }
 
     // View Zone
@@ -98,7 +111,15 @@ class ApiController extends Controller
         } catch (Exception $e) {
             return $this->invalidId();
         }
-        return ["message" => "Zone Data", "data" => $data, "Status" => "200"];
+        return $this->successResponse($data);
+    }
+
+
+    // View All Zone
+    public function viewAllZone()
+    {
+        $data = Zone::all();
+        return $this->successResponse($data);
     }
 
 
@@ -109,10 +130,10 @@ class ApiController extends Controller
 
         try {
             $request->validate([
-                'zoneid' => 'required|numeric',
+                'zoneid' => 'required',
             ]);
-        } catch (Exception $e) {
-            return response(["message" => "Zone id is required and should be numeric value", "status" => 500], 500);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
         }
         try {
             $data = Zone::findOrFail($id);
@@ -127,7 +148,7 @@ class ApiController extends Controller
         } catch (Exception $e) {
             return response(["message" =>   "Zone id already Exists", "status" => 500], 500);
         }
-        return ["message" => "Zone Updated", "data" => $data];
+        return $this->successResponse($data);
     }
 
 
@@ -143,7 +164,7 @@ class ApiController extends Controller
             return $this->invalidId();
         }
         $data->delete();
-        return ["message" => "Zone Deleted", "data" => $data];
+        return $this->successResponse($data);
     }
 
 
@@ -159,15 +180,15 @@ class ApiController extends Controller
                 'areaname' => 'required',
                 "areacode" => "required"
             ]);
-        } catch (Exception $e) {
-            return response(["message: Validation Failed", "status" => 500], 500);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
         }
         try {
             $data = Area::create($request->all());
         } catch (Exception $e) {
             return response(["message" => "Area Name Already Exists", "status" => 500], 500);
         }
-        return ["message" => "Area Created", "data" => $data];
+        return $this->successResponse($data);
     }
 
 
@@ -181,8 +202,8 @@ class ApiController extends Controller
                 'areaname' => 'required',
                 "areacode" => "required"
             ]);
-        } catch (Exception $e) {
-            return response(["message: Validation Failed", "status" => 500], 500);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
         }
 
         try {
@@ -192,7 +213,7 @@ class ApiController extends Controller
         }
         $data->update($request->all());
 
-        return ["message" => "Area Updated", "data" => $data, "status" => 200];
+        return $this->successResponse($data);
     }
 
     // View Area
@@ -203,9 +224,16 @@ class ApiController extends Controller
         } catch (Exception $e) {
             return $this->invalidId();
         }
-        return ["message" => "Area", "data" => $data, "status" => 200];
+        return $this->successResponse($data);
     }
 
+
+    // View All Area
+    public function viewAllArea()
+    {
+        $data = Area::all();
+        return $this->successResponse($data);
+    }
 
 
     // To delete Area
@@ -217,7 +245,7 @@ class ApiController extends Controller
             return $this->invalidId();
         }
         $data->delete();
-        return ["message" => "Area Deleted Successfully", "data" => $data, "status" => 200];
+        return $this->successResponse($data);
     }
 
 
@@ -237,64 +265,75 @@ class ApiController extends Controller
                 "talukname" => "required",
                 "talukcode" => "required"
             ]);
-        } catch (Exception $e) {
-            return response(["message: Validation Failed", "status" => 500], 500);
+        } catch (ValidationException $e) {
+            $this->validationInvalid($e->errors());
         }
         try {
-            $data = Area::create($request->all());
+            $data = Taluk::create($request->all());
         } catch (Exception $e) {
-            return response(["message" => "Area Name Already Exists", "status" => 500], 500);
+            return response(["message" => "Taluk Name Already Exists", "status" => 500], 500);
         }
-        return ["message" => "Area Created", "data" => $data];
+        return $this->successResponse($data);
     }
 
 
     // UpdateArea
-    public function updateArea(Request $request, $id)
+    public function updateTaluk(Request $request, $id)
     {
 
         try {
             $request->validate([
                 "zoneid" => "required",
                 'areaname' => 'required',
-                "areacode" => "required"
+                "areacode" => "required",
+                "talukname" => "required",
+                "talukcode" => "required"
             ]);
-        } catch (Exception $e) {
-            return response(["message: Validation Failed", "status" => 500], 500);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
         }
 
         try {
-            $data = Area::findOrFail($id);
+            $data = Taluk::findOrFail($id);
         } catch (Exception $e) {
             return $this->invalidId();
         }
         $data->update($request->all());
 
-        return ["message" => "Area Updated", "data" => $data, "status" => 200];
+        return $this->successResponse($data);
     }
 
+
+
+
     // View Area
-    public function viewArea($id)
+    public function viewTaluk($id)
     {
         try {
-            $data = Area::findOrFail($id);
+            $data = Taluk::findOrFail($id);
         } catch (Exception $e) {
             return $this->invalidId();
         }
-        return ["message" => "Area", "data" => $data, "status" => 200];
+        return $this->successResponse($data);
+    }
+
+    // View ALl Taluk
+    public function viewAllTaluk()
+    {
+        $data = Taluk::all();
+        return $this->successResponse($data);
     }
 
 
-
     // To delete Area
-    public function deleteArea($id)
+    public function deleteTaluk($id)
     {
         try {
-            $data = Area::findOrFail($id);
+            $data = Taluk::findOrFail($id);
         } catch (Exception $e) {
             return $this->invalidId();
         }
         $data->delete();
-        return ["message" => "Area Deleted Successfully", "data" => $data, "status" => 200];
+        return $this->successResponse($data);
     }
 }

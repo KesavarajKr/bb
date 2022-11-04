@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Taluk extends Model
 {
     use HasFactory;
+
+    protected $fillable  = [
+        "zoneid",
+        'areaname',
+        "areacode",
+        "talukname",
+        "talukcode"
+    ];
 }

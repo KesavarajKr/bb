@@ -25,7 +25,11 @@ Route::POST('createuser', [ApiController::class, 'createuser']);
 Route::POST('createarea', [ApiController::class, "createArea"]);
 
 // To view Area
-Route::get('area/{id}', [ApiController::class, "viewArea"]);
+Route::get('viewarea/{id}', [ApiController::class, "viewArea"]);
+
+// To View Area all
+Route::get("viewallarea", [ApiController::class, "viewallarea"]);
+
 
 // To Update Area
 Route::POST('updatearea/{id}', [ApiController::class, "updateArea"]);
@@ -38,7 +42,11 @@ Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
 Route::POST('createzone', [ApiController::class, "createzone"]);
 
 // To view zone
-Route::get('zone/{id}', [ApiController::class, "viewzone"]);
+Route::get('viewzone/{id}', [ApiController::class, "viewzone"]);
+
+
+// To View All zone
+Route::get("viewallzone", [ApiController::class, "viewallzone"]);
 
 // To Update zone
 Route::POST('updatezone/{id}', [ApiController::class, "updatezone"]);
@@ -51,7 +59,11 @@ Route::post('deletezone/{id}', [ApiController::class, "deletezone"]);
 Route::POST('createtaluk', [ApiController::class, "createtaluk"]);
 
 // To view taluk
-Route::get('taluk/{id}', [ApiController::class, "viewtaluk"]);
+Route::get('viewtaluk/{id}', [ApiController::class, "viewtaluk"]);
+
+// To View All taluk
+Route::get("viewalltaluk", [ApiController::class, "viewalltaluk"]);
+
 
 // To Update taluk
 Route::POST('updatetaluk/{id}', [ApiController::class, "updatetaluk"]);

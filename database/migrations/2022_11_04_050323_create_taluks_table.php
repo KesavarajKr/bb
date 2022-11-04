@@ -15,6 +15,11 @@ class CreateTaluksTable extends Migration
     {
         Schema::create('taluks', function (Blueprint $table) {
             $table->id();
+            $table->string("zoneid");
+            $table->string("areaname");
+            $table->string("areacode");
+            $table->string("talukname")->unique();
+            $table->string("talukcode");
             $table->timestamps();
         });
     }
