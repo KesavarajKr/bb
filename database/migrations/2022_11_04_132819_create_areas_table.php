@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaluksTable extends Migration
+class CreateAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTaluksTable extends Migration
      */
     public function up()
     {
-        Schema::create('taluks', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->string("zoneid");
-            $table->string("areaname");
-            $table->string("areacode");
-            $table->string("talukname")->unique();
-            $table->string("talukcode");
+            $table->text("district_name");
+            $table->text("district_code");
+            $table->text("taluk_name")->unique();
+            $table->text("taluk_code")->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTaluksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('taluks');
+        Schema::dropIfExists('areas');
     }
 }

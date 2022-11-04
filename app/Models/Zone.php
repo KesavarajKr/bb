@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Zone extends Model
 {
     use HasFactory;
-    protected $fillable = ["zoneid"];
+    protected $fillable = ["zone_id", "district_name", "district_code"];
 }

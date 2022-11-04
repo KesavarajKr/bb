@@ -55,18 +55,3 @@ Route::POST('updatezone/{id}', [ApiController::class, "updatezone"]);
 Route::post('deletezone/{id}', [ApiController::class, "deletezone"]);
 
 
-// To create taluk
-Route::POST('createtaluk', [ApiController::class, "createtaluk"]);
-
-// To view taluk
-Route::get('viewtaluk/{id}', [ApiController::class, "viewtaluk"]);
-
-// To View All taluk
-Route::get("viewalltaluk", [ApiController::class, "viewalltaluk"]);
-
-
-// To Update taluk
-Route::POST('updatetaluk/{id}', [ApiController::class, "updatetaluk"]);
-
-// To Delete taluk
-Route::post('deletetaluk/{id}', [ApiController::class, "deletetaluk"]);

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
-use App\Models\Taluk;
 use App\Models\Zone;
 use Exception;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use PHPUnit\Framework\Error;
+
+
 
 
 class ApiController extends Controller
@@ -81,25 +81,124 @@ class ApiController extends Controller
     }
 
 
+
+
+    //Create Area
+    public function createArea(Request $request)
+    {
+        try {
+            $request->validate([
+                'district_name' => 'required',
+                "district_code" => "required",
+                "taluk_name.*" => "required",
+                "taluk_code.*" => "required",
+            ]);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
+        }
+        try {
+            $talukNames = $request->input("taluk_name");
+            $talukCodes = $request->input("taluk_code");
+            $data = [];
+
+            foreach ($talukNames as $key => $taluk) {
+                $area = new Area();
+                $area->district_name = $request->input("district_name");
+                $area->district_code = $request->input("district_code");
+                $area->taluk_name = $taluk;
+                $area->taluk_code = $talukCodes[$key];
+                array_push($data, $area);
+                $area->save();
+            }
+        } catch (Exception $e) {
+            return response(["message" => $e->getMessage(), "status" => 500], 500);
+        }
+        return $this->successResponse($data);
+    }
+
+
+
+
+    // View Area
+    public function viewArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        return $this->successResponse($data);
+    }
+
+
+    // View All Area
+    public function viewAllArea()
+    {
+        $data = Area::all();
+        return $this->successResponse($data);
+    }
+
+
+
+    // UpdateArea
+    public function updateArea(Request $request, $id)
+    {
+
+        try {
+            $request->validate([
+                'district_name' => 'required',
+                "district_code" => "required",
+                "taluk_name" => "required",
+                "taluk_code" => "required",
+            ]);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
+        }
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception  $e) {
+            return $this->invalidId();
+        }
+
+        $data->update($request->all());
+        return $this->successResponse($data);
+    }
+
+    public function deleteArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        $data->delete();
+        return $this->successResponse($data);
+    }
+
+
+
     // Create Zone
     public function createzone(Request $request)
     {
 
         try {
             $request->validate([
-                'zoneid' => 'required|numeric',
+                'zone_id' => 'required|numeric',
+                'district_name' => 'required',
+                'district_code' => 'required',
+
             ]);
         } catch (ValidationException $e) {
             return $this->validationInvalid($e->errors());
         }
-        $zoneId  = "Zone_" . $request->input('zoneid');
-        try {
-            $data = Zone::create([
-                "zoneid" => $zoneId
-            ]);
-        } catch (Exception $e) {
-            return response(["message" => "Zone ID Already Exists", "status" => 500], 500);
-        }
+        $zoneId  = "Zone_" . $request->input('zone_id');
+
+        $data = new Zone();
+        $data->zone_id = $zoneId;
+        $data->district_name = $request->input("district_name");
+        $data->district_code = $request->input("district_code");
+        $data->save();
+
         return $this->successResponse($data);
     }
 
@@ -127,27 +226,30 @@ class ApiController extends Controller
     // UpdateZone
     public function updatezone(Request $request, $id)
     {
-
         try {
             $request->validate([
-                'zoneid' => 'required',
+                'zone_id' => 'required|numeric',
+                'district_name' => 'required',
+                'district_code' => 'required',
+
             ]);
         } catch (ValidationException $e) {
             return $this->validationInvalid($e->errors());
         }
+
         try {
             $data = Zone::findOrFail($id);
         } catch (Exception $e) {
             return $this->invalidId();
         }
-        $zoneId  = "Zone_" . $request->input('zoneid');
-        try {
-            $data->update([
-                "zoneid" => $zoneId
-            ]);
-        } catch (Exception $e) {
-            return response(["message" =>   "Zone id already Exists", "status" => 500], 500);
-        }
+
+        $zoneId  = "Zone_" . $request->input('zone_id');
+        $data->update([
+            "zone_id" => $zoneId,
+            "district_name" => $request->input("district_name"),
+            "district_code" => $request->input("district_code"),
+        ]);
+
         return $this->successResponse($data);
     }
 
@@ -160,176 +262,6 @@ class ApiController extends Controller
     {
         try {
             $data = Zone::findOrFail($id);
-        } catch (Exception $e) {
-            return $this->invalidId();
-        }
-        $data->delete();
-        return $this->successResponse($data);
-    }
-
-
-
-
-
-    //Create Area
-    public function createArea(Request $request)
-    {
-        try {
-            $request->validate([
-                "zoneid" => "required",
-                'areaname' => 'required',
-                "areacode" => "required"
-            ]);
-        } catch (ValidationException $e) {
-            return $this->validationInvalid($e->errors());
-        }
-        try {
-            $data = Area::create($request->all());
-        } catch (Exception $e) {
-            return response(["message" => "Area Name Already Exists", "status" => 500], 500);
-        }
-        return $this->successResponse($data);
-    }
-
-
-    // UpdateArea
-    public function updateArea(Request $request, $id)
-    {
-
-        try {
-            $request->validate([
-                "zoneid" => "required",
-                'areaname' => 'required',
-                "areacode" => "required"
-            ]);
-        } catch (ValidationException $e) {
-            return $this->validationInvalid($e->errors());
-        }
-
-        try {
-            $data = Area::findOrFail($id);
-        } catch (Exception $e) {
-            return $this->invalidId();
-        }
-        $data->update($request->all());
-
-        return $this->successResponse($data);
-    }
-
-    // View Area
-    public function viewArea($id)
-    {
-        try {
-            $data = Area::findOrFail($id);
-        } catch (Exception $e) {
-            return $this->invalidId();
-        }
-        return $this->successResponse($data);
-    }
-
-
-    // View All Area
-    public function viewAllArea()
-    {
-        $data = Area::all();
-        return $this->successResponse($data);
-    }
-
-
-    // To delete Area
-    public function deleteArea($id)
-    {
-        try {
-            $data = Area::findOrFail($id);
-        } catch (Exception $e) {
-            return $this->invalidId();
-        }
-        $data->delete();
-        return $this->successResponse($data);
-    }
-
-
-
-
-
-    // Create Taluk
-
-
-    public function createTaluk(Request $request)
-    {
-        try {
-            $request->validate([
-                "zoneid" => "required",
-                'areaname' => 'required',
-                "areacode" => "required",
-                "talukname" => "required",
-                "talukcode" => "required"
-            ]);
-        } catch (ValidationException $e) {
-            $this->validationInvalid($e->errors());
-        }
-        try {
-            $data = Taluk::create($request->all());
-        } catch (Exception $e) {
-            return response(["message" => "Taluk Name Already Exists", "status" => 500], 500);
-        }
-        return $this->successResponse($data);
-    }
-
-
-    // UpdateArea
-    public function updateTaluk(Request $request, $id)
-    {
-
-        try {
-            $request->validate([
-                "zoneid" => "required",
-                'areaname' => 'required',
-                "areacode" => "required",
-                "talukname" => "required",
-                "talukcode" => "required"
-            ]);
-        } catch (ValidationException $e) {
-            return $this->validationInvalid($e->errors());
-        }
-
-        try {
-            $data = Taluk::findOrFail($id);
-        } catch (Exception $e) {
-            return $this->invalidId();
-        }
-        $data->update($request->all());
-
-        return $this->successResponse($data);
-    }
-
-
-
-
-    // View Area
-    public function viewTaluk($id)
-    {
-        try {
-            $data = Taluk::findOrFail($id);
-        } catch (Exception $e) {
-            return $this->invalidId();
-        }
-        return $this->successResponse($data);
-    }
-
-    // View ALl Taluk
-    public function viewAllTaluk()
-    {
-        $data = Taluk::all();
-        return $this->successResponse($data);
-    }
-
-
-    // To delete Area
-    public function deleteTaluk($id)
-    {
-        try {
-            $data = Taluk::findOrFail($id);
         } catch (Exception $e) {
             return $this->invalidId();
         }

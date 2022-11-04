@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveZonesTable extends Migration
+class CreateZonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,9 @@ class RemoveZonesTable extends Migration
     {
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
-            $table->string("zoneid")->unique();
+            $table->text("zone_id");
+            $table->text("district_name");
+            $table->text("district_code");
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class RemoveZonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('areas');
+        Schema::dropIfExists('zones');
     }
 }
