@@ -21,17 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::POST('createuser', [ApiController::class, 'createuser']);
 
-// // To create Area
-// Route::POST('createarea', [ApiController::class, "createArea"]);
+// To create Area
+Route::POST('createarea', [ApiController::class, "createArea"]);
 
-// // To view Area
-// Route::get('area/{id}', [ApiController::class, "viewArea"]);
+// To view Area
+Route::get('area/{id}', [ApiController::class, "viewArea"]);
 
-// // To Update Area
-// Route::POST('updatearea/{id}', [ApiController::class, "updateArea"]);
+// To Update Area
+Route::POST('updatearea/{id}', [ApiController::class, "updateArea"]);
 
-// // To Delete Area
-// Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
+// To Delete Area
+Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
 
 
 // To create Zone
@@ -45,3 +45,16 @@ Route::POST('updatezone/{id}', [ApiController::class, "updatezone"]);
 
 // To Delete zone
 Route::post('deletezone/{id}', [ApiController::class, "deletezone"]);
+
+
+// To create taluk
+Route::POST('createtaluk', [ApiController::class, "createtaluk"]);
+
+// To view taluk
+Route::get('taluk/{id}', [ApiController::class, "viewtaluk"]);
+
+// To Update taluk
+Route::POST('updatetaluk/{id}', [ApiController::class, "updatetaluk"]);
+
+// To Delete taluk
+Route::post('deletetaluk/{id}', [ApiController::class, "deletetaluk"]);

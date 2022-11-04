@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\DB;
 class ApiController extends Controller
 {
     //
+    public function invalidId()
+    {
+        return response(["message" => "Invalid ID", "status" => 500], 500);
+    }
+
+
 
     public function createuser(Request $request)
     {
@@ -62,10 +68,6 @@ class ApiController extends Controller
     }
 
 
-
-
-
-
     // Create Zone
     public function createzone(Request $request)
     {
@@ -94,7 +96,7 @@ class ApiController extends Controller
         try {
             $data = Zone::findOrFail($id);
         } catch (Exception $e) {
-            return response(["message" => "Zone Id Not Found", "status" => 500], 500);
+            return $this->invalidId();
         }
         return ["message" => "Zone Data", "data" => $data, "Status" => "200"];
     }
@@ -115,7 +117,7 @@ class ApiController extends Controller
         try {
             $data = Zone::findOrFail($id);
         } catch (Exception $e) {
-            return response(["status" => 500, "message" => "Given Id Does not Exists"], 500);
+            return $this->invalidId();
         }
         $zoneId  = "Zone_" . $request->input('zoneid');
         try {
@@ -138,7 +140,7 @@ class ApiController extends Controller
         try {
             $data = Zone::findOrFail($id);
         } catch (Exception $e) {
-            return response(["message" => "Invalid ID", "status" => 500], 500);
+            return $this->invalidId();
         }
         $data->delete();
         return ["message" => "Zone Deleted", "data" => $data];
@@ -148,64 +150,151 @@ class ApiController extends Controller
 
 
 
-    // Create Area
-    // public function createArea(Request $request)
-    // {
-    //     try {
-    //         $request->validate([
-    //             'areaname' => 'required',
-    //         ]);
+    //Create Area
+    public function createArea(Request $request)
+    {
+        try {
+            $request->validate([
+                "zoneid" => "required",
+                'areaname' => 'required',
+                "areacode" => "required"
+            ]);
+        } catch (Exception $e) {
+            return response(["message: Validation Failed", "status" => 500], 500);
+        }
+        try {
+            $data = Area::create($request->all());
+        } catch (Exception $e) {
+            return response(["message" => "Area Name Already Exists", "status" => 500], 500);
+        }
+        return ["message" => "Area Created", "data" => $data];
+    }
 
 
-    //         $data = Area::create($request->all());
+    // UpdateArea
+    public function updateArea(Request $request, $id)
+    {
 
-    //         return ["message" => "Area Created", "data" => $data];
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
+        try {
+            $request->validate([
+                "zoneid" => "required",
+                'areaname' => 'required',
+                "areacode" => "required"
+            ]);
+        } catch (Exception $e) {
+            return response(["message: Validation Failed", "status" => 500], 500);
+        }
 
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        $data->update($request->all());
 
-    // // UpdateArea
-    // public function updateArea(Request $request, $id)
-    // {
+        return ["message" => "Area Updated", "data" => $data, "status" => 200];
+    }
 
-    //     try {
-    //         $request->validate([
-    //             'areaname' => 'required',
-    //         ]);
-    //         $data = Area::findOrFail($id);
-    //         $data->update($request->all());
-
-    //         return ["message" => "Area Updated", "data" => $data];
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
-
-    // // View Area
-    // public function viewArea($id)
-    // {
-    //     try {
-    //         $data = Area::findOrFail($id);
-    //         return ["message" => "Area", "data" => $data];
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
+    // View Area
+    public function viewArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        return ["message" => "Area", "data" => $data, "status" => 200];
+    }
 
 
 
-    // // To delete Area
-    // public function deleteArea($id)
-    // {
-    //     try {
-    //         $data = Area::findOrFail($id);
-    //         $data->delete();
+    // To delete Area
+    public function deleteArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        $data->delete();
+        return ["message" => "Area Deleted Successfully", "data" => $data, "status" => 200];
+    }
 
-    //         return ["message" => "Area Deleted", "data" => $data];
-    //     } catch (Exception $e) {
-    //         return $e->getMessage();
-    //     }
-    // }
+
+
+
+
+    // Create Taluk
+
+
+    public function createTaluk(Request $request)
+    {
+        try {
+            $request->validate([
+                "zoneid" => "required",
+                'areaname' => 'required',
+                "areacode" => "required",
+                "talukname" => "required",
+                "talukcode" => "required"
+            ]);
+        } catch (Exception $e) {
+            return response(["message: Validation Failed", "status" => 500], 500);
+        }
+        try {
+            $data = Area::create($request->all());
+        } catch (Exception $e) {
+            return response(["message" => "Area Name Already Exists", "status" => 500], 500);
+        }
+        return ["message" => "Area Created", "data" => $data];
+    }
+
+
+    // UpdateArea
+    public function updateArea(Request $request, $id)
+    {
+
+        try {
+            $request->validate([
+                "zoneid" => "required",
+                'areaname' => 'required',
+                "areacode" => "required"
+            ]);
+        } catch (Exception $e) {
+            return response(["message: Validation Failed", "status" => 500], 500);
+        }
+
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        $data->update($request->all());
+
+        return ["message" => "Area Updated", "data" => $data, "status" => 200];
+    }
+
+    // View Area
+    public function viewArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        return ["message" => "Area", "data" => $data, "status" => 200];
+    }
+
+
+
+    // To delete Area
+    public function deleteArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        $data->delete();
+        return ["message" => "Area Deleted Successfully", "data" => $data, "status" => 200];
+    }
 }
