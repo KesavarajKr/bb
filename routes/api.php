@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::POST('createuser',[ApiController::class,'createuser']);
+Route::POST('createuser', [ApiController::class, 'createuser']);
 
 
 // Api Urls
@@ -37,14 +37,47 @@ Route::POST('createuser',[ApiController::class,'createuser']);
 // Delete Row : 'api/deleteeng/bb-eng-001';
 
 
-Route::POST('createEngineer',[EngineerController::class,'createEngineer']);
-Route::GET('viewengineer',[EngineerController::class,'viewengineer']);
-Route::GET('viewengineerdetails/{engid}',[EngineerController::class,'viewengineerdetails']);
-Route::GET('deleteeng/{engid}',[EngineerController::class,'deleteeng']);
+Route::POST('createEngineer', [EngineerController::class, 'createEngineer']);
+Route::GET('viewengineer', [EngineerController::class, 'viewengineer']);
+Route::GET('viewengineerdetails/{engid}', [EngineerController::class, 'viewengineerdetails']);
+Route::GET('deleteeng/{engid}', [EngineerController::class, 'deleteeng']);
 
 
-Route::POST('drawrequest',[DrawingController::class,'drawrequest']);
-Route::POST('replydraw',[DrawingController::class,'replydraw']);
+Route::POST('drawrequest', [DrawingController::class, 'drawrequest']);
+Route::POST('replydraw', [DrawingController::class, 'replydraw']);
 
-Route::POST('createUser',[UserController::class,'createUser']);
+Route::POST('createUser', [UserController::class, 'createUser']);
 
+
+// To create Area
+Route::POST('createarea', [ApiController::class, "createArea"]);
+
+// To view Area
+Route::get('viewarea/{id}', [ApiController::class, "viewArea"]);
+
+// To View Area all
+Route::get("viewallarea", [ApiController::class, "viewallarea"]);
+
+
+// To Update Area
+Route::put('updatearea/{id}', [ApiController::class, "updateArea"]);
+
+// To Delete Area
+Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
+
+
+// To create Zone
+Route::POST('createzone', [ApiController::class, "createzone"]);
+
+// To view zone
+Route::get('viewzone/{id}', [ApiController::class, "viewzone"]);
+
+
+// To View All zone
+Route::get("viewallzone", [ApiController::class, "viewallzone"]);
+
+// To Update zone
+Route::POST('updatezone/{id}', [ApiController::class, "updatezone"]);
+
+// To Delete zone
+Route::post('deletezone/{id}', [ApiController::class, "deletezone"]);
