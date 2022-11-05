@@ -76,3 +76,91 @@ $(document).on("click", ".plus", function() {
 $(document).on("click", ".remove_row", function() {
     $(this).closest(".row").remove();
 });
+
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
+    } );
+} );
+
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+$(".saveuser").click(function(){
+
+    var name = $("#name").val();
+    var email = $("#email").val();
+
+    var mobilenumber = $("#mobilenumber").val();
+    var password = $("#password").val();
+    var profilepic = $("#profilepic").val();
+    var role = $("#role").val();
+    var projectmenu = $("#projectmenu").val();
+    var zonemenu = $("#zonemenu").val();
+    var regionmenu = $("#regionmenu").val();
+    var areamenu = $("#areamenu").val();
+    var usersmenu = $("#usersmenu").val();
+    var clientsmenu = $("#clientsmenu").val();
+    var estimatemenu = $("#estimatemenu").val();
+
+    $.ajax({
+        method:"POST",
+        url: "/saveUser",
+        data: {
+            name: name,
+            email: email,
+            mobilenumber: mobilenumber,
+            password: password,
+            profilepic:profilepic,
+            role:role,
+            projectmenu:projectmenu,
+            zonemenu:zonemenu,
+            regionmenu:regionmenu,
+            areamenu:areamenu,
+            usersmenu:usersmenu,
+            clientsmenu:clientsmenu,
+            estimatemenu:estimatemenu
+        },
+        success: function(data) {
+
+            if($.isEmptyObject(data.error)){
+                // alert(data.success);
+
+                $(".error-text").text('');
+                name = $("#name").val('');
+                email = $("#email").val('');
+                mobilenumber = $("#mobilenumber").val('');
+                password = $("#password").val('');
+
+                $("#successmodal").modal('show');
+            }
+            else
+            {
+                printErrorMsg(data.error);
+            }
+        },
+
+
+
+    });
+
+    function printErrorMsg(msg)
+    {
+        $.each(msg,function(key,value){
+            console.log(key);
+            $('.'+key+'_error').text(value);
+        });
+    }
+
+});

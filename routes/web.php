@@ -19,5 +19,6 @@ Route::get('/', function () {
 });
 
 Route::view('dashboard','pages.dashboard');
+Route::view('users','pages.users');
 
 

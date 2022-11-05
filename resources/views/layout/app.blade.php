@@ -10,42 +10,14 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <script src="https://kit.fontawesome.com/cdcced96ff.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-    <header>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-2 text-center">
-                    <div class="logo">
-                        <img src="assets/images/dashboard/business_bench_logo.svg" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="navbar">
-                        <ul>
-                            <li><a href="javascript:;">Home</a></li>
-                            <li><a href="javascript:;">Projects</a></li>
-                            <li><a href="javascript:;">Zones</a></li>
-                            <li><a href="javascript:;">Region</a></li>
-                            <li><a href="javascript:;">Area</a></li>
-                            <li><a href="javascript:;">Engineers</a></li>
-                            <li><a href="javascript:;">Users</a></li>
-                            <li><a href="javascript:;">Clients</a></li>
-                            <li><a href="javascript:;">Estimate</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="admin_logo">
-                        <img src="" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    @include('layout.navbar')
 
     @section('main-content')
 
@@ -63,6 +35,13 @@
     <script src="assets/js/aos.js"></script>
 
     <script src="assets/js/script.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
 </body>
 
