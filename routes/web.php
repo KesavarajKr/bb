@@ -70,4 +70,4 @@ Route::post("/create_zone", [CreateZoneController::class, "store"]);
 Route::view('dashboard','pages.dashboard');
 Route::view('users','pages.users');
 
-
+git 
