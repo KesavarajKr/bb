@@ -14,7 +14,7 @@ class ApiController extends Controller
     {
 
         $validated = $request->validate([
-            'name' => 'required|unique:users|max:255',
+            'name' => 'required|max:255',
             'email' => 'required',
             'mobilenumber' => 'required',
             'role' => 'required',
