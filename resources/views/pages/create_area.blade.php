@@ -2,9 +2,20 @@
 @section('title', 'Business Bench | Create Area')
 @section('main-content')
     <div class="modal-content creation_section">
+        @if ($errors->any())
+            <div class="custom_dismiss_alert">
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-warning alert-dismissible fade show alert_custom_waring">
+                        <button type="button" class="btn-close custom_btn_close" data-bs-dismiss="alert"></button>
+                        <strong>!!</strong> {{ $error }}
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
         <div class="modal-body">
             <button class="creation_of_btn">Creation of Area</button>
-            <form action="api/createarea" method="post" id="add_area_form">
+            <form action="create_area" method="post" id="add_area_form">
                 @csrf
                 <div class="zone-box">
                     <h3 class="my-3">District Infomation</h3>

@@ -86,6 +86,7 @@ class ApiController extends Controller
     //Create Area
     public function createArea(Request $request)
     {
+
         try {
             $request->validate([
                 'district_name' => 'required',
@@ -93,27 +94,26 @@ class ApiController extends Controller
                 "taluk_name.*" => "required",
                 "taluk_code.*" => "required",
             ]);
-        } catch (ValidationException $e) {
-            return $this->validationInvalid($e->errors());
+        } catch (ValidationException $error) {
+            return  $this->validationInvalid($error->errors());
         }
-        try {
-            $talukNames = $request->input("taluk_name");
-            $talukCodes = $request->input("taluk_code");
-            $data = [];
 
-            foreach ($talukNames as $key => $taluk) {
-                $area = new Area();
-                $area->district_name = $request->input("district_name");
-                $area->district_code = $request->input("district_code");
-                $area->taluk_name = $taluk;
-                $area->taluk_code = $talukCodes[$key];
-                array_push($data, $area);
-                $area->save();
-            }
-        } catch (Exception $e) {
-            return response(["message" => $e->getMessage(), "status" => 500], 500);
+
+        $talukNames = $request->input("taluk_name");
+        $talukCodes = $request->input("taluk_code");
+        $data = [];
+
+        foreach ($talukNames as $key => $taluk) {
+            $area = new Area();
+            $area->district_name = $request->input("district_name");
+            $area->district_code = $request->input("district_code");
+            $area->taluk_name = $taluk;
+            $area->taluk_code = $talukCodes[$key];
+            array_push($data, $area);
+            $area->save();
         }
-        return redirect("/create_zone")->with("data", $data)->with;
+
+        return redirect("/create_zone")->with("data", $data);
     }
 
 
@@ -143,7 +143,6 @@ class ApiController extends Controller
     // UpdateArea
     public function updateArea(Request $request, $id)
     {
-
         try {
             $request->validate([
                 'district_name' => 'required',
@@ -206,7 +205,7 @@ class ApiController extends Controller
             $zone->save();
         }
 
-        return $this->successResponse($data);
+        return  redirect("dashboard")->with("data", $this->successResponse($data));
     }
 
     // View Zone
@@ -274,5 +273,13 @@ class ApiController extends Controller
         }
         $data->delete();
         return $this->successResponse($data);
+    }
+
+
+    public function getTaluk(Request $request, $id)
+    {
+        $talukas = Area::where("district_name", $id)->get();
+        $options =  view("pages.get_taluk", ["talukas" => $talukas])->render();
+        return  $options;
     }
 }

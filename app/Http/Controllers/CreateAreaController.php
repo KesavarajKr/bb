@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CreateAreaController extends Controller
 {
@@ -34,7 +36,29 @@ class CreateAreaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'district_name' => 'required',
+            "district_code" => "required",
+            "taluk_name.*" => "required",
+            "taluk_code.*" => "required",
+        ]);
+
+        $talukNames = $request->input("taluk_name");
+        $talukCodes = $request->input("taluk_code");
+        $data = [];
+
+        foreach ($talukNames as $key => $taluk) {
+            $area = new Area();
+
+            $area->district_name = $request->input("district_name");
+            $area->district_code = $request->input("district_code");
+            $area->taluk_name = $taluk;
+            $area->taluk_code = $talukCodes[$key];
+            array_push($data, $area);
+            $area->save();
+        }
+
+        return redirect("/create_zone")->with("data", $data);
     }
 
     /**

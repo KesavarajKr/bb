@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Zone;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
-class CreateZoneController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +13,7 @@ class CreateZoneController extends Controller
      */
     public function index()
     {
-        return view("pages.create_zone")->with("create_zone", "create_zone");
+        return view("pages.dashboard")->with("dashboard", "dashboard");
     }
 
     /**
@@ -36,28 +34,7 @@ class CreateZoneController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'zone_id' => 'required',
-            'district_name.*' => 'required',
-            'district_code.*' => 'required',
-
-        ]);
-
-
-        $districtNames = $request->input("district_name");
-        $districtCodes = $request->input("district_code");
-        $data = [];
-
-        foreach ($districtNames as $key => $districtN) {
-            $zone = new Zone();
-            $zone->zone_id = $request->input("zone_id");
-            $zone->district_name = $districtN;
-            $zone->district_code = $districtCodes[$key];
-            array_push($data, $zone);
-            $zone->save();
-        }
-
-        return  redirect("dashboard")->with("data", $data);
+        //
     }
 
     /**

@@ -26,19 +26,22 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="login_box">
-                        <p>Get Started with <span>Login</span> </p>
+                    <form action="login" method="POST">
+                        <div class="login_box">
+                            <p>Get Started with <span>Login</span> </p>
 
-                        <div class="form-input">
-                            <input type="text" name="name" placeholder="User ID">
+                            <div class="form-input">
+                                <input type="text" name="email" placeholder="User ID">
+                            </div>
+                            <div class="form-input position-relative">
+                                <input type="password" name="password" placeholder="Password" class="login_password">
+                                <div class="eye"><i class="far fa-eye-slash"></i></div>
+                            </div>
+                            <a href="/create_area">
+                                <button type="button" class="get_start">Get Started</button>
+                            </a>
                         </div>
-                        <div class="form-input position-relative">
-                            <input type="password" name="password" placeholder="Password" class="login_password">
-                            <div class="eye"><i class="far fa-eye-slash"></i></div>
-                        </div>
-
-                        <button class="get_start">Get Started</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

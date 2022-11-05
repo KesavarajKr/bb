@@ -3,16 +3,29 @@
 @section('main-content')
 
     <div class="modal-content creation_section">
+
+
+        @if ($errors->any())
+            <div class="custom_dismiss_alert">
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-warning alert-dismissible fade show alert_custom_waring">
+                        <button type="button" class="btn-close custom_btn_close" data-bs-dismiss="alert"></button>
+                        <strong>!!</strong> {{ $error }}
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
         <div class="modal-body">
             <button class="creation_of_btn">Creation of Zone</button>
 
-            <form action="api/createzone" method="post" id="add_zone_form">
+            <form action="create_zone" method="post" id="add_zone_form">
                 @csrf
                 <div class="zone-box">
                     <h3 class="my-3">Zone Infomation</h3>
                     <div class="form-input">
                         <label for="">Name</label><span class="text-danger">*</span><br>
-                        <input type="textr" class="zone_id_input" name="zone_id" style="width: 95%" autocomplete="off"
+                        <input type="text" class="zone_id_input" name="zone_id" style="width: 95%" autocomplete="off"
                             placeholder="Input Zone Number">
                     </div>
                     <h3 class="my-4">District Infomation</h3>
@@ -21,22 +34,22 @@
                             <div class="col-lg-6">
                                 <div class="form-input">
                                     <label for="">Name</label><span class="text-danger">*</span><br>
-                                    <select class="form-select district_name_input" name="district_name[]">
-                                        <option selected value=""> Select District Name</option>
-                                        <option value="1">Chennai</option>
-                                        <option value="2">Madurai</option>
-                                        <option value="3">Trichy</option>
+                                    <select class="form-select district_name_input zone_district_name_select"
+                                        name="district_name[]">
+                                        <option selected value="" disabled> Select District Name</option>
+                                        <option value="Chennai">Chennai</option>
+                                        <option value="Madurai">Madurai</option>
+                                        <option value="Trichy">Trichy</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-input">
                                     <label for="">Code</label><span class="text-danger">*</span><br>
-                                    <select class="form-select district_code_input" name="district_code[]">
+                                    <select class="form-select  district_code_input zone_district_code_select"
+                                        name="district_code[]">
                                         <option selected value="">Select District Code</option>
-                                        <option value="1"></option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+
                                     </select>
                                 </div>
                             </div>

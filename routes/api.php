@@ -81,3 +81,7 @@ Route::POST('updatezone/{id}', [ApiController::class, "updatezone"]);
 
 // To Delete zone
 Route::post('deletezone/{id}', [ApiController::class, "deletezone"]);
+
+
+//to get taluka
+Route::post("getTaluk/{id}", [ApiController::class, "getTaluk"]);
