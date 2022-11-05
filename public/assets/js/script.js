@@ -116,7 +116,7 @@ $(".saveuser").click(function(){
 
     $.ajax({
         method:"POST",
-        url: "/saveUser",
+        url: "/api/createUser",
         data: {
             name: name,
             email: email,
@@ -142,8 +142,12 @@ $(".saveuser").click(function(){
                 email = $("#email").val('');
                 mobilenumber = $("#mobilenumber").val('');
                 password = $("#password").val('');
+                role = $("#role").val('');
+    $("#projectmenu").attr('checked','false');
+    $("#zonemenu").attr('checked','false');
 
-                $("#successmodal").modal('show');
+                // $("#successmodal").modal('show');
+                alert("data saved");
             }
             else
             {

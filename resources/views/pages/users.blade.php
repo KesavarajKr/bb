@@ -517,23 +517,28 @@
                                         <div class="form-input">
                                             <label for="">Name</label><span class="text-danger">*</span><br>
                                             <input type="text" name="name" style="width: 95%" id="name">
+                                            <span class="error-text name_error"></span>
                                         </div>
                                         <div class="form-input mt-3">
                                             <label for="">Password</label><span class="text-danger">*</span><br>
                                             <input type="text" name="name" style="width: 95%" id="password">
+                                            <span class="error-text password_error"></span>
                                         </div>
                                         <div class="form-input mt-3">
                                             <label for="">Mobile Number</label><span class="text-danger">*</span><br>
                                             <input type="text" name="name" style="width: 95%" id="mobilenumber">
+                                            <span class="error-text mobilenumber_error"></span>
                                         </div>
                                         <div class="form-input mt-3">
                                             <label for="">E-mail</label><span class="text-danger">*</span><br>
                                             <input type="text" name="name" style="width: 95%" id="email">
+                                            <span class="error-text email_error"></span>
                                         </div>
-                                        <div class="form-input mt-3">
+                                        {{-- <div class="form-input mt-3">
                                             <label for="">Profile Picture (400 X 400)</label><span class="text-danger">*</span><br>
                                             <input type="file" name="name" style="width: 95%" id="profilepic">
-                                        </div>
+                                            <span class="error-text name_error"></span>
+                                        </div> --}}
                                     </div>
                                     <div class="col-lg-6">
 
@@ -544,53 +549,54 @@
                                                 <option>Option 2</option>
                                                 <option>Option 3</option>
                                             </select>
+                                            <span class="error-text role_error"></span>
                                         </div>
                                         <div class="form-group mt-3">
                                             <label for="">Menu Permission</label><span class="text-danger">*</span><br>
                                             <div class="form-check mt-2">
-                                                <input class="form-check-input" type="checkbox" value="" id="projectmenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="projectmenu" checked >
                                                 <label class="form-check-label" for="projectmenu">
                                                   Projects
                                                 </label>
                                               </div>
                                               <div class="form-check ">
-                                                <input class="form-check-input" type="checkbox" value="" id="zonemenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="zonemenu" checked>
                                                 <label class="form-check-label" for="zonemenu">
                                                   Zones
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="regionmenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="regionmenu" checked>
                                                 <label class="form-check-label" for="regionmenu">
                                                   Region
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="areamenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="areamenu" checked>
                                                 <label class="form-check-label" for="areamenu">
                                                   Area
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="engineersmenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="engineersmenu" checked>
                                                 <label class="form-check-label" for="engineersmenu">
                                                   Engineers
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="usersmenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="usersmenu" checked>
                                                 <label class="form-check-label" for="usersmenu">
                                                   Users
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="clientsmenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="clientsmenu" checked>
                                                 <label class="form-check-label" for="clientsmenu">
                                                   Clients
                                                 </label>
                                               </div>
                                               <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="estimatemenu" checked>
+                                                <input class="form-check-input" type="checkbox" value="1" id="estimatemenu" checked>
                                                 <label class="form-check-label" for="estimatemenu">
                                                   Estimate
                                                 </label>

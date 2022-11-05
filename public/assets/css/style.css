@@ -507,3 +507,7 @@ header .navbar ul li a {
     background-color: #1F2325 !important;
     border-color: #1F2325 !important;
 }
+.error-text
+{
+    color:red;
+}
