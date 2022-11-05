@@ -11,13 +11,14 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/slick.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <script src="https://kit.fontawesome.com/cdcced96ff.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-    @include('layout.header')
+
     @include('layout.navbar')
 
     @section('main-content')
