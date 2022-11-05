@@ -32,7 +32,7 @@ Route::get("viewallarea", [ApiController::class, "viewallarea"]);
 
 
 // To Update Area
-Route::POST('updatearea/{id}', [ApiController::class, "updateArea"]);
+Route::put('updatearea/{id}', [ApiController::class, "updateArea"]);
 
 // To Delete Area
 Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
@@ -53,5 +53,3 @@ Route::POST('updatezone/{id}', [ApiController::class, "updatezone"]);
 
 // To Delete zone
 Route::post('deletezone/{id}', [ApiController::class, "deletezone"]);
-
-

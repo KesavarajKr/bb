@@ -184,20 +184,27 @@ class ApiController extends Controller
         try {
             $request->validate([
                 'zone_id' => 'required|numeric',
-                'district_name' => 'required',
-                'district_code' => 'required',
+                'district_name.*' => 'required',
+                'district_code.*' => 'required',
 
             ]);
         } catch (ValidationException $e) {
             return $this->validationInvalid($e->errors());
         }
-        $zoneId  = "Zone_" . $request->input('zone_id');
 
-        $data = new Zone();
-        $data->zone_id = $zoneId;
-        $data->district_name = $request->input("district_name");
-        $data->district_code = $request->input("district_code");
-        $data->save();
+        $districtNames = $request->input("district_name");
+        $districtCodes = $request->input("district_code");
+        $zoneId  = "Zone_" . $request->input('zone_id');
+        $data = [];
+
+        foreach ($districtNames as $key => $districtN) {
+            $zone = new Zone();
+            $zone->zone_id = $zoneId;
+            $zone->district_name = $districtN;
+            $zone->district_code = $districtCodes[$key];
+            array_push($data, $zone);
+            $zone->save();
+        }
 
         return $this->successResponse($data);
     }
