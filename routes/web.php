@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\CreateAreaController;
+use App\Http\Controllers\CreateZoneController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,12 @@ Route::get('/', function () {
     return view('pages.login');
 });
 
-Route::view('dashboard','pages.dashboard');
+// Route for  createArea
+Route::get("/create_area", [CreateAreaController::class, "index"]);
+
+// Route for  createZone
+Route::get("/create_zone", [CreateZoneController::class, "index"]);
 
 
+
+Route::view('dashboard', 'pages.dashboard');

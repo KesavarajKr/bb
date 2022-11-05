@@ -113,7 +113,7 @@ class ApiController extends Controller
         } catch (Exception $e) {
             return response(["message" => $e->getMessage(), "status" => 500], 500);
         }
-        return $this->successResponse($data);
+        return redirect("/create_zone")->with("data", $data)->with;
     }
 
 

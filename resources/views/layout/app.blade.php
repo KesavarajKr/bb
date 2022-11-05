@@ -61,7 +61,7 @@
     <script src="assets/js/slick.min.js"></script>
     <script src="assets/js/bootstrap_js/bootstrap.min.js"></script>
     <script src="assets/js/aos.js"></script>
-
+    <script src="{{ asset('assets/js/just_validate/validate.js') }}"></script>
     <script src="assets/js/script.js"></script>
 
 </body>

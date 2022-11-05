@@ -4,13 +4,13 @@
 }
 
 @font-face {
-    font-family: 'bradon';
+    font-family: "bradon";
     src: url(../fonts/brandon-regular.otf);
 }
 
 :root {
-    --main--green-color: #BDEB05;
-    --main-font: 'bradon';
+    --main--green-color: #bdeb05;
+    --main-font: "bradon";
 }
 
 body {
@@ -21,11 +21,15 @@ section {
     padding: 50px 0;
 }
 
-
 /** Login Page **/
 
 .login_banner {
-    background: linear-gradient(180deg, #FFFFFF 5.5%, rgba(255, 255, 255, 0) 69.2%), url(../images/login/login_bg.png);
+    background: linear-gradient(
+            180deg,
+            #ffffff 5.5%,
+            rgba(255, 255, 255, 0) 69.2%
+        ),
+        url(../images/login/login_bg.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -62,7 +66,10 @@ section {
 .login_box {
     padding: 34% 50px;
     text-align: center;
-    background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6));
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0.6)
+    );
 }
 
 .login_box p {
@@ -71,7 +78,7 @@ section {
 
 .login_box p span {
     font-weight: 700;
-    color: #73AF27;
+    color: #73af27;
 }
 
 .login_box .form-input {
@@ -82,7 +89,7 @@ section {
 .login_box .form-input input {
     box-sizing: border-box;
     background: rgba(241, 241, 241, 0.5);
-    border: 1px solid #ABABAB;
+    border: 1px solid #ababab;
     border-radius: 11px;
     padding: 8px 15px;
     margin: 5px 0;
@@ -99,8 +106,8 @@ section {
 }
 
 .login_box .get_start {
-    background: #73AF27;
-    border: 1px solid #73AF27;
+    background: #73af27;
+    border: 1px solid #73af27;
     border-radius: 11px;
     width: 60%;
     margin-top: 25px;
@@ -198,7 +205,7 @@ section {
 }
 
 .partnering .row .col-lg-10 {
-    background-color: #2F3335;
+    background-color: #2f3335;
     padding: 50px 5% 12% 30%;
     position: relative;
 }
@@ -206,7 +213,7 @@ section {
 .track .row .col-lg-10 {
     padding: 50px 30% 8% 5%;
     position: relative;
-    background-color: #757D82;
+    background-color: #757d82;
 }
 
 .partnering .row .col-lg-10 h2,
@@ -337,7 +344,7 @@ section {
 }
 
 .basic_filter p {
-    color: #5B5858;
+    color: #5b5858;
     font-size: 18px;
 }
 
@@ -366,11 +373,10 @@ section {
     color: transparent;
 }
 
-
 /** Dashboard Style **/
 
 header {
-    background-color: #1F2325;
+    background-color: #1f2325;
     padding: 5px 0;
 }
 
@@ -394,10 +400,10 @@ header .navbar ul li a {
 
 .box-groups .box {
     text-align: center;
-    background-color: #1F2325;
+    background-color: #1f2325;
     padding: 20px 10px;
     border-radius: 15px;
-    color: #BDEB05;
+    color: #bdeb05;
 }
 
 .box-groups .box p {
@@ -420,7 +426,7 @@ header .navbar ul li a {
 .modal-body .zone-box {
     padding: 30px 80px 0;
     margin: 0 10%;
-    border: 1px solid #D9D9D980;
+    border: 1px solid #d9d9d980;
     border-bottom: none !important;
     border-radius: 11px;
     border-bottom-left-radius: 0;
@@ -432,12 +438,13 @@ header .navbar ul li a {
 }
 
 .modal-body .zone-box .form-input label {
-    color: #A8A6A6;
+    color: #a8a6a6;
     margin-bottom: 7px;
 }
 
-.modal-body .zone-box .form-input input {
-    border: 1px solid #D9D9D9;
+.modal-body .zone-box .form-input input,
+.modal-body .zone-box .form-input select {
+    border: 1px solid #d9d9d9;
     border-radius: 11px;
     padding: 8px 15px;
     width: 90%;
@@ -457,18 +464,20 @@ header .navbar ul li a {
 }
 
 .zone_submit {
-    background-color: #2F3335;
-    color: #BDEB05;
+    background-color: #2f3335;
+    color: #bdeb05;
     font-size: 18px;
     padding: 5px 45px;
     margin-top: 45px;
-    border: 1px solid #2F3335;
+    border: 1px solid #2f3335;
     border-radius: 10px;
     margin-bottom: 30px;
 }
 
 .zone-box .plus,
-.zone-box .remove_row {
+.zone-box .taluk_plus,
+.zone-box .remove_row,
+.zone-box .taluk_remove_row {
     position: absolute;
     width: 30px;
     height: 30px;
@@ -482,13 +491,38 @@ header .navbar ul li a {
     user-select: none;
 }
 
-.zone-box .plus {
+.zone-box .plus,
+.zone-box .taluk_plus {
     right: 2px;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
 }
 
-.zone-box .remove_row {
+.zone-box .remove_row,
+.zone-box .taluk_remove_row {
     right: -40px;
     background-color: red;
     color: #fff;
+}
+
+.creation_of_btn {
+    border: none;
+    background-color: #2f3335;
+    color: #bdeb05;
+    font-style: normal;
+    font-weight: 450;
+    font-size: 23px;
+    line-height: 32px;
+    position: absolute;
+    max-width: 100%;
+    padding: 5px 25px;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+    display: inline-block;
+    border-radius: 5px;
+    cursor: default !important;
+}
+
+.creation_section {
+    padding: 100px 0 0 0;
 }
