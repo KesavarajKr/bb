@@ -36,8 +36,13 @@ class UserController extends Controller
         $users = $request->users;
         $clients = $request->clients;
         $estimates = $request->estimates;
-        $usertype = $request->usertype;
+        $usertype = "1";
 
+        $invID = 0;
+        $maxValue = DB::table('users')->max('id');
+        $invID = $maxValue + 1;
+        $invID = str_pad($invID, 3, '0', STR_PAD_LEFT);
+        $userid = "BB-USR-" . $invID;
 
         if($validated->passes())
         {
@@ -57,13 +62,18 @@ class UserController extends Controller
                 "users"=>$users,
                 "clients"=>$clients,
                 "estimates"=>$estimates,
-                "usertype"=>$usertype
+                "usertype"=>$usertype,
+                "userid"=>$userid
             ]);
 
             if($saveuser)
             {
                 return response()->json(['success'=>'User Created Successfully']);
             }
+        }
+        else
+        {
+            return response()->json(['error'=>$validated->errors()]);
         }
     }
 }

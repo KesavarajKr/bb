@@ -67,5 +67,7 @@ Route::post("/create_zone", [CreateZoneController::class, "store"]);
 // Success Zone Creation
 // Route::get("zone_creation_success", [ZoneCreationSuccess::class, "index"]);
 
+Route::view('dashboard','pages.dashboard');
+Route::view('users','pages.users');
 
 
