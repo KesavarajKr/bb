@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
 Route::POST('createuser',[ApiController::class,'createuser']);
 
 
@@ -45,3 +47,4 @@ Route::POST('drawrequest',[DrawingController::class,'drawrequest']);
 Route::POST('replydraw',[DrawingController::class,'replydraw']);
 
 Route::POST('createUser',[UserController::class,'createUser']);
+
