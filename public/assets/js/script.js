@@ -1,7 +1,6 @@
 AOS.init(); // AOS Initialze
 
 // Sliders
-
 $(".content-slider").slick({
     dots: true,
     infinite: true,
@@ -66,7 +65,7 @@ $(document).on("click", ".eye", function () {
 $(document).on("click", ".plus", function () {
     var html = `
             <div class="row extra_fields position-relative mt-3">
-            div class="col-lg-6">
+            <div class="col-lg-6">
             <div class="form-input">
                 <label for="">Name</label><span class="text-danger">*</span><br>
                 <select class="form-select district_name_input zone_district_name_select"
@@ -84,11 +83,11 @@ $(document).on("click", ".plus", function () {
                 <select class="form-select  district_code_input zone_district_code_select"
                     name="district_code[]">
                     <option selected value="">Select District Code</option>
-
                 </select>
             </div>
         </div>
         <div class="plus"><i class="fas fa-plus"></i></div>
+
                 <div class="remove_row"><i class="fas fa-times"></i></div>
             </div>
     `;
@@ -100,26 +99,21 @@ $(document).on("click", ".plus", function () {
 $(document).on("click", ".taluk_plus", function () {
     var html = `
             <div class="row extra_fields position-relative mt-3">
-            <div class="row extra_fields position-relative">
-                                    <div class="col-lg-6">
-                                        <div class="form-input">
-                                            <label for="">Name</label><span class="text-danger">*</span><br>
-                                            <input type="text" name="taluk_name[]" class="taluk_name_input">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-input">
-                                            <label for="">Code</label><span class="text-danger">*</span><br>
-                                            <input type="text" name="taluk_code[]" class="taluk_code_input">
-                                        </div>
-                                    </div>
-                                    <div class="taluk_plus"><i class="fas fa-plus"></i></div>
-                                </div>
+            <div class="col-lg-6">
+            <div class="form-input">
+                <label for="">Name</label><span class="text-danger">*</span><br>
+                <input type="text" name="district_name" class="district_name">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-input">
+                <label for="">Code</label><span class="text-danger">*</span><br>
+                <input type="text" name="district_code" class="district_code">
+            </div>
+        </div>
                 <div class="taluk_remove_row"><i class="fas fa-times"></i></div>
         </div>
-
     `;
-
     $(".taluk_field_groups").append(html);
     removeErrorLabels();
 });
@@ -204,7 +198,7 @@ if ($("#add_zone_form").length) {
         const data = await res.text();
 
         $(
-            this.closest(".field_groups").querySelector(
+            this.closest(".extra_fields").querySelector(
                 ".zone_district_code_select"
             )
         ).html(data);
@@ -214,32 +208,22 @@ function removeErrorLabels() {
     $(".just-validate-error-label").remove();
 }
 
-console.log("token", document.querySelector("[name='_token']").value);
-
-$(document).ready(function() {
-    $('#example').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ]
-    } );
-} );
-
+$(document).ready(function () {
+    $("#example").DataTable({
+        dom: "Bfrtip",
+        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+    });
+});
 
 $.ajaxSetup({
     headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
 });
 
-$(".saveuser").click(function(){
-
+$(".saveuser").click(function () {
     var name = $("#name").val();
     var email = $("#email").val();
-
     var mobilenumber = $("#mobilenumber").val();
     var password = $("#password").val();
     var profilepic = $("#profilepic").val();
@@ -253,56 +237,47 @@ $(".saveuser").click(function(){
     var estimatemenu = $("#estimatemenu").val();
 
     $.ajax({
-        method:"POST",
+        method: "POST",
         url: "/api/createUser",
         data: {
             name: name,
             email: email,
             mobilenumber: mobilenumber,
             password: password,
-            profilepic:profilepic,
-            role:role,
-            projectmenu:projectmenu,
-            zonemenu:zonemenu,
-            regionmenu:regionmenu,
-            areamenu:areamenu,
-            usersmenu:usersmenu,
-            clientsmenu:clientsmenu,
-            estimatemenu:estimatemenu
+            profilepic: profilepic,
+            role: role,
+            projectmenu: projectmenu,
+            zonemenu: zonemenu,
+            regionmenu: regionmenu,
+            areamenu: areamenu,
+            usersmenu: usersmenu,
+            clientsmenu: clientsmenu,
+            estimatemenu: estimatemenu,
         },
-        success: function(data) {
-
-            if($.isEmptyObject(data.error)){
+        success: function (data) {
+            if ($.isEmptyObject(data.error)) {
                 // alert(data.success);
-
-                $(".error-text").text('');
-                name = $("#name").val('');
-                email = $("#email").val('');
-                mobilenumber = $("#mobilenumber").val('');
-                password = $("#password").val('');
-                role = $("#role").val('');
-    $("#projectmenu").attr('checked','false');
-    $("#zonemenu").attr('checked','false');
+                $(".error-text").text("");
+                name = $("#name").val("");
+                email = $("#email").val("");
+                mobilenumber = $("#mobilenumber").val("");
+                password = $("#password").val("");
+                role = $("#role").val("");
+                $("#projectmenu").attr("checked", "false");
+                $("#zonemenu").attr("checked", "false");
 
                 // $("#successmodal").modal('show');
                 alert("data saved");
-            }
-            else
-            {
+            } else {
                 printErrorMsg(data.error);
             }
         },
-
-
-
     });
 
-    function printErrorMsg(msg)
-    {
-        $.each(msg,function(key,value){
+    function printErrorMsg(msg) {
+        $.each(msg, function (key, value) {
             console.log(key);
-            $('.'+key+'_error').text(value);
+            $("." + key + "_error").text(value);
         });
     }
-
 });

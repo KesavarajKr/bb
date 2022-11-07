@@ -25,8 +25,7 @@
                     <h3 class="my-3">Zone Infomation</h3>
                     <div class="form-input">
                         <label for="">Name</label><span class="text-danger">*</span><br>
-                        <input type="text" class="zone_id_input" name="zone_id" style="width: 95%" autocomplete="off"
-                            placeholder="Input Zone Number">
+                        <input type="text" class="zone_id_input" name="zone_id" style="width: 95%" autocomplete="off">
                     </div>
                     <h3 class="my-4">District Infomation</h3>
                     <div class="field_groups">
@@ -49,7 +48,6 @@
                                     <select class="form-select  district_code_input zone_district_code_select"
                                         name="district_code[]">
                                         <option selected value="">Select District Code</option>
-
                                     </select>
                                 </div>
                             </div>
