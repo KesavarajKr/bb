@@ -25,12 +25,6 @@
 
     @show
 
-
-
-
-
-
-
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/slick.min.js"></script>
     <script src="assets/js/bootstrap_js/bootstrap.min.js"></script>

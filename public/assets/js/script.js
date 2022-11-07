@@ -111,6 +111,7 @@ $(document).on("click", ".taluk_plus", function () {
                 <input type="text" name="district_code" class="district_code">
             </div>
         </div>
+        <div class="taluk_plus"><i class="fas fa-plus"></i></div>
                 <div class="taluk_remove_row"><i class="fas fa-times"></i></div>
         </div>
     `;
