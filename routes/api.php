@@ -55,12 +55,15 @@ Route::POST('createarea', [ApiController::class, "createArea"]);
 // To view Area
 Route::get('viewarea/{id}', [ApiController::class, "viewArea"]);
 
+// TO Edit view area
+Route::get('editarea/{id}', [ApiController::class, "editArea"]);
+
 // To View Area all
 Route::get("viewallarea", [ApiController::class, "viewallarea"]);
 
 
 // To Update Area
-Route::put('updatearea/{id}', [ApiController::class, "updateArea"]);
+Route::post('updatearea/{id}', [ApiController::class, "updateArea"]);
 
 // To Delete Area
 Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
@@ -68,6 +71,10 @@ Route::post('deletearea/{id}', [ApiController::class, "deleteArea"]);
 
 // To create Zone
 Route::POST('createzone', [ApiController::class, "createzone"]);
+
+
+// ReRender table
+Route::POST("renderarea", [ApiController::class, "renderArea"]);
 
 // To view zone
 Route::get('viewzone/{id}', [ApiController::class, "viewzone"]);

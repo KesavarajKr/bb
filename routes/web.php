@@ -56,7 +56,7 @@ Route::get("/dashboard", [DashboardController::class, "index"]);
 Route::view("/", "pages.login");
 
 // Route for  createArea
-Route::get("/create_area", [CreateAreaController::class, "index"]);
+Route::get("/areas", [CreateAreaController::class, "index"]);
 Route::post("/create_area", [CreateAreaController::class, "store"]);
 
 // Route for  createZone
@@ -67,6 +67,5 @@ Route::post("/create_zone", [CreateZoneController::class, "store"]);
 // Success Zone Creation
 // Route::get("zone_creation_success", [ZoneCreationSuccess::class, "index"]);
 
-Route::view('dashboard','pages.dashboard');
-Route::view('users','pages.users');
-
+Route::view('dashboard', 'pages.dashboard');
+Route::view('users', 'pages.users');

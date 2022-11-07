@@ -424,8 +424,7 @@ header .navbar ul li a {
 }
 
 .modal-body .zone-box {
-    padding: 30px 80px 0;
-    margin: 0 10%;
+    margin: 0 50px;
     border: 1px solid #d9d9d980;
     border-bottom: none !important;
     border-radius: 11px;
@@ -489,6 +488,8 @@ header .navbar ul li a {
     padding: 0;
     cursor: pointer;
     user-select: none;
+    display: grid;
+    place-items: center;
 }
 
 .zone-box .plus,
@@ -579,4 +580,39 @@ header .navbar ul li a {
 }
 .error-text {
     color: red;
+}
+
+.table_container {
+    position: relative;
+}
+
+.modal_popup_btn {
+    position: absolute;
+    max-width: 35%;
+    top: 10px;
+    right: 30px;
+}
+
+.action_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action_container button {
+    border: none;
+    outline: none;
+    padding: 8px 10px;
+    background: #bdeb05;
+    color: #1f2325 !important;
+    font-weight: 600;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.preloader_container {
+    display: grid;
+    width: 100%;
+    height: 35vh;
+    place-items: center;
 }

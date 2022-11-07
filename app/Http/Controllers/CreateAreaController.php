@@ -15,7 +15,8 @@ class CreateAreaController extends Controller
      */
     public function index()
     {
-        return view("pages.create_area")->with("create_area", "create_area");
+        $areas  = Area::all();
+        return view("pages.create_area", compact("areas"))->with("create_area", "create_area");
     }
 
     /**

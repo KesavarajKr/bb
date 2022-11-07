@@ -127,7 +127,33 @@ class ApiController extends Controller
         } catch (Exception $e) {
             return $this->invalidId();
         }
-        return $this->successResponse($data);
+
+        $viewArea =  view("pages.view_area", ["data" => $data])->render();
+
+        return $viewArea;
+    }
+
+
+
+    public function editArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+
+        $viewArea =  view("pages.edit_area", ["data" => $data])->render();
+
+        return $viewArea;
+    }
+
+
+    public function renderArea()
+    {
+        $areas  = Area::all();
+        $tableView   = view("pages.render_area", compact("areas"))->render();
+        return $tableView;
     }
 
 
@@ -160,6 +186,7 @@ class ApiController extends Controller
         }
 
         $data->update($request->all());
+
         return $this->successResponse($data);
     }
 

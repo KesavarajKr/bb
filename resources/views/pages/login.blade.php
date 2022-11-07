@@ -229,7 +229,7 @@
     <script src="assets/js/bootstrap/bootstrap.min.js"></script>
     <script src="assets/js/aos.js"></script>
 
-    <script src="assets/js/script.js"></script>
+    <script type="module" src="assets/js/script.js"></script>
 
 
 </body>
