@@ -40,7 +40,6 @@ class CreateZoneController extends Controller
             'zone_id' => 'required',
             'district_name.*' => 'required',
             'district_code.*' => 'required',
-
         ]);
 
 

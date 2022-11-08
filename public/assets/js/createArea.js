@@ -1,31 +1,57 @@
+function dataTableReRender() {
+    $("#example").DataTable().destroy();
+    $("#example").DataTable({
+        dom: "Bfrtip",
+        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        aaSorting: [],
+    });
+}
+
+let createAreaCounter = 0;
 // Add area --> taluk appends code
 $(document).on("click", ".taluk_plus", function () {
     var html = `
     <div class="row extra_fields position-relative">
-    <div class="col-lg-6">
-        <div class="form-input">
-            <label for="">Name</label><span class="text-danger">*</span><br>
-            <input type="text" name="taluk_name[]"
-                class="taluk_name_input taluk_name" required>
+        <div class="col-lg-6">
+            <div class="form-input">
+                <label for="">Name</label><span class="text-danger">*</span><br>
+                <input type="text" name="taluk_name[]"
+                    class="taluk_name_input taluk_name_input_${createAreaCounter}  taluk_name" required>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="form-input">
-            <label for="">Code</label><span class="text-danger">*</span><br>
-            <input type="text" name="taluk_code[]"
-                class="taluk_code_input taluk_code" required>
+        <div class="col-lg-6">
+            <div class="form-input">
+                <label for="">Code</label><span class="text-danger">*</span><br>
+                <input type="text" name="taluk_code[]"
+                    class="taluk_code_input taluk_code_input_${createAreaCounter} taluk_code" required>
+            </div>
         </div>
+        <div class="taluk_plus"><i class="fas fa-plus"></i></div>
+        <div class="taluk_remove_row"><i class="fas fa-times"></i></div>
     </div>
-    <div class="taluk_plus"><i class="fas fa-plus"></i></div>
-    <div class="taluk_remove_row"><i class="fas fa-times"></i></div>
-</div>
-
     `;
     $(".taluk_field_groups").append(html);
-    removeErrorLabels();
+
+    addValidation(createAreaCounter);
+    createAreaCounter++;
 });
 
-//
+function addValidation(counter) {
+    const areaValidation = new JustValidate("#add_area_form");
+    areaValidation
+        .addField(`.taluk_name_input_${counter}`, [
+            {
+                rule: "required",
+                errorMessage: "This Field is required",
+            },
+        ])
+        .addField(`.taluk_code_input_${counter}`, [
+            {
+                rule: "required",
+                errorMessage: "This Field is required",
+            },
+        ]);
+}
 
 // Add Area --> taluk remove code
 $(document).on("click", ".taluk_remove_row", function () {
@@ -76,10 +102,9 @@ function saveArea() {
     $(".taluk_code").each(function (key, el) {
         taluk_code[key] = el.value;
     });
-
     $.ajax({
         method: "POST",
-        url: "create_area",
+        url: "api/createarea",
         data: {
             district_name: district_name,
             district_code: district_code,
@@ -88,8 +113,25 @@ function saveArea() {
         },
         success: function (data) {
             if ($.isEmptyObject(data.error)) {
+                console.log(data);
                 document.getElementById("add_area_form").reset();
-                Swal.fire("Data Saved", "", "success");
+                Swal.fire("Data Saved", "", "success").then((result) => {
+                    $.ajax({
+                        method: "POST",
+                        url: `api/renderarea`,
+                        success: function (data, textStatus, xhr) {
+                            console.log(xhr.status);
+                            $(".create_area_modal").modal("hide");
+                            $("#re_render").html(data);
+                            dataTableReRender();
+                            editBtnHandler();
+                            deleteBtnHandler();
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        },
+                    });
+                });
             } else {
                 printErrorMsg(data.error);
             }
@@ -102,10 +144,6 @@ function saveArea() {
             $("." + key + "_error").text(value);
         });
     }
-}
-
-function removeErrorLabels() {
-    $(".just-validate-error-label").remove();
 }
 
 $(".view_btn").on("click", function () {
@@ -122,7 +160,7 @@ $(".view_btn").on("click", function () {
         success: function (data) {
             setTimeout(() => {
                 $("#view_form_data").html(data);
-            }, 300);
+            }, 100);
         },
         error: function (data) {
             console.log(data);
@@ -146,7 +184,11 @@ function editHandler(id) {
                         method: "POST",
                         url: `api/renderarea`,
                         success: function (data) {
+                            $(".edit_area_modal").modal("hide");
                             $("#re_render").html(data);
+                            dataTableReRender();
+                            editBtnHandler();
+                            deleteBtnHandler();
                         },
                         error: function (data) {
                             console.log(data);
@@ -161,62 +203,81 @@ function editHandler(id) {
     });
 }
 
-$(".edit_btn").on("click", function () {
-    const html = `
-                        <div class="preloader_container">
-                            <img src="assets/images/dashboard/preloader.gif" alt="preloader_logo">
-                        </div>
-    `;
-    $("#edit_form_data").html(html);
-    const id = this.dataset.areaId;
-    $.ajax({
-        method: "GET",
-        url: `api/editarea/${id}`,
-        success: function (data) {
-            setTimeout(() => {
-                $("#edit_form_data").html(data);
-                editHandler(id);
-            }, 1000);
-        },
-        error: function (data) {
-            console.log(data);
-        },
+function editBtnHandler() {
+    $(".edit_btn").on("click", function () {
+        const html = `
+                            <div class="preloader_container">
+                                <img src="assets/images/dashboard/preloader.gif" alt="preloader_logo">
+                            </div>
+        `;
+        $("#edit_form_data").html(html);
+        const id = this.dataset.areaId;
+        $.ajax({
+            method: "GET",
+            url: `api/editarea/${id}`,
+            success: function (data) {
+                setTimeout(() => {
+                    $("#edit_form_data").html(data);
+                    editHandler(id);
+                }, 200);
+            },
+            error: function (data) {
+                console.log(data);
+            },
+        });
     });
-});
+}
+editBtnHandler();
 
 //
-$(".delete_btn").on("click", function () {
-    const id = this.dataset.areaId;
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                method: "POST",
-                url: `api/deletearea/${id}`,
-                success: function (data) {
-                    Swal.fire(
-                        "Deleted!",
-                        "Your file has been deleted.",
-                        "success"
-                    ).then((result) => {
-                        location.reload();
-                    });
-                },
-                error: function (data) {
-                    Swal.fire(
-                        "Deleted!",
-                        "Your file has been deleted.",
-                        "success"
-                    );
-                },
-            });
-        }
+
+function deleteBtnHandler() {
+    $(".delete_btn").on("click", function () {
+        const id = this.dataset.areaId;
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    method: "POST",
+                    url: `api/deletearea/${id}`,
+                    success: function (data) {
+                        Swal.fire(
+                            "Deleted!",
+                            "Your file has been deleted.",
+                            "success"
+                        ).then((result) => {
+                            $.ajax({
+                                method: "POST",
+                                url: `api/renderarea`,
+                                success: function (data) {
+                                    $("#re_render").html(data);
+                                    dataTableReRender();
+                                    editBtnHandler();
+                                    deleteBtnHandler();
+                                },
+                                error: function (data) {
+                                    console.log(data);
+                                },
+                            });
+                        });
+                    },
+                    error: function (data) {
+                        Swal.fire(
+                            "Deleted!",
+                            "Your file has been deleted.",
+                            "success"
+                        );
+                    },
+                });
+            }
+        });
     });
-});
+}
+deleteBtnHandler();

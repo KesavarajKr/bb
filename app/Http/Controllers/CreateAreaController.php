@@ -2,47 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Validation\ValidationException;
 use App\Models\Area;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+use App\Models\Zone;
+use Exception;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\DB;
+
 
 class CreateAreaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function invalidId()
+    {
+        return response(["message" => "Invalid ID", "status" => 500], 500);
+    }
+
+    public function validationInvalid($errors)
+    {
+        return response(["message" => $errors, "status" => 400], 400);
+    }
+
+    public function successResponse($data)
+    {
+        return response(["message" => "success", "data" => $data, "status" => 200]);
+    }
+
+
     public function index()
     {
-        $areas  = Area::all();
-        return view("pages.create_area", compact("areas"))->with("create_area", "create_area");
+        $areas  = Area::all()->sortByDesc("id");
+
+        return view("pages.create_area", compact("areas"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    //Create Area
+    public function createArea(Request $request)
     {
-        //
-    }
+        try {
+            $request->validate([
+                'district_name' => 'required',
+                "district_code" => "required",
+                "taluk_name.*" => "required",
+                "taluk_code.*" => "required",
+            ]);
+        } catch (ValidationException $error) {
+            return  $this->validationInvalid($error->errors());
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'district_name' => 'required',
-            "district_code" => "required",
-            "taluk_name.*" => "required",
-            "taluk_code.*" => "required",
-        ]);
 
         $talukNames = $request->input("taluk_name");
         $talukCodes = $request->input("taluk_code");
@@ -50,60 +58,106 @@ class CreateAreaController extends Controller
 
         foreach ($talukNames as $key => $taluk) {
             $area = new Area();
-
-            $area->district_name = $request->input("district_name");
-            $area->district_code = $request->input("district_code");
-            $area->taluk_name = $taluk;
-            $area->taluk_code = $talukCodes[$key];
+            $area->district_name =  strtoupper($request->input("district_name"));
+            $area->district_code = strtoupper($request->input("district_code"));
+            $area->taluk_name = strtoupper($taluk);
+            $area->taluk_code = strtoupper($talukCodes[$key]);
             array_push($data, $area);
             $area->save();
         }
 
-        return redirect("/create_zone")->with("data", $data);
+        return $this->successResponse($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+
+
+    // View Area
+    public function viewArea($id)
     {
-        //
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+
+        $viewArea =  view("pages.view_area", ["data" => $data])->render();
+
+        return $viewArea;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    // Get Method to view edit area
+    public function editArea($id)
     {
-        //
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+
+        $viewArea =  view("pages.edit_area", ["data" => $data])->render();
+
+        return $viewArea;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    // tables data to be re rendered
+    public function renderArea()
     {
-        //
+        $areas  = Area::all()->sortByDesc("id");
+        $tableView   = view("pages.render_area", compact("areas"))->render();
+        return $tableView;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    // View All Area
+    public function viewAllArea()
     {
-        //
+        $data = Area::all();
+        return $this->successResponse($data);
+    }
+
+
+
+    // UpdateArea
+    public function updateArea(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'district_name' => 'required',
+                "district_code" => "required",
+                "taluk_name" => "required",
+                "taluk_code" => "required",
+            ]);
+        } catch (ValidationException $e) {
+            return $this->validationInvalid($e->errors());
+        }
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception  $e) {
+            return $this->invalidId();
+        }
+        $data->update([
+            "district_name" =>  strtoupper($request->input("district_name")),
+            "district_code" => strtoupper($request->input("district_code")),
+            "taluk_name" => strtoupper($request->input("taluk_name")),
+            "taluk_code" => strtoupper($request->input("taluk_code")),
+        ]);
+
+        return $this->successResponse($data);
+    }
+
+
+    // To Delete Area
+    public function deleteArea($id)
+    {
+        try {
+            $data = Area::findOrFail($id);
+        } catch (Exception $e) {
+            return $this->invalidId();
+        }
+        $data->delete();
+        return $this->successResponse($data);
     }
 }

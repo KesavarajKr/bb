@@ -10,7 +10,7 @@
                         <div class="row ">
                             <div class="col-lg-12">
                                 <div class="userdetails">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive" id="re_render">
                                         <table id="example" class="table table-striped" style="width:100%">
                                             <thead>
                                                 <tr>
@@ -21,63 +21,30 @@
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="re_render">
-                                                @foreach ($areas as $key => $area)
-                                                    @if ($key % 2 == 0)
-                                                        <tr class="odd">
-                                                            <td>{{ $area->district_name }}</td>
-                                                            <td>{{ $area->district_code }}</td>
-                                                            <td>{{ $area->taluk_name }}</td>
-                                                            <td>{{ $area->taluk_code }}</td>
-                                                            <td>
-                                                                <div class="action_container">
-                                                                    <button class="view_btn"
-                                                                        data-bs-target=".view_area_modal"
-                                                                        data-bs-toggle="modal"
-                                                                        data-area-id={{ $area->id }}>
-                                                                        <i class="fas fa-eye"></i>
-                                                                    </button>
-                                                                    <button class="edit_btn"
-                                                                        data-bs-target=".edit_area_modal"
-                                                                        data-bs-toggle="modal"
-                                                                        data-area-id={{ $area->id }}>
-                                                                        <i class="fas fa-edit"></i>
-                                                                    </button>
-                                                                    <button class="delete_btn" class="delete_btn"
-                                                                        data-area-id={{ $area->id }}>
-                                                                        <i class="fas text-danger fa-trash-alt"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @else
-                                                        <tr class="even">
-                                                            <td>{{ $area->district_name }}</td>
-                                                            <td>{{ $area->district_code }}</td>
-                                                            <td>{{ $area->taluk_name }}</td>
-                                                            <td>{{ $area->taluk_code }}</td>
-                                                            <td>
-                                                                <div class="action_container">
-                                                                    <button class="view_btn"
-                                                                        data-bs-target=".view_area_modal"
-                                                                        data-bs-toggle="modal"
-                                                                        data-area-id={{ $area->id }}>
-                                                                        <i class="fas fa-eye"></i>
-                                                                    </button>
-                                                                    <button class="edit_btn"
-                                                                        data-bs-target=".edit_area_modal"
-                                                                        data-bs-toggle="modal"
-                                                                        data-area-id={{ $area->id }}>
-                                                                        <i class="fas fa-edit"></i>
-                                                                    </button>
-                                                                    <button class="delete_btn" class="delete_btn"
-                                                                        data-area-id={{ $area->id }}>
-                                                                        <i class="fas text-danger fa-trash-alt"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endif
+                                            <tbody>
+                                                @foreach ($areas as $area)
+                                                    <tr class="odd">
+                                                        <td>{{ $area->district_name }}</td>
+                                                        <td>{{ $area->district_code }}</td>
+                                                        <td>{{ $area->taluk_name }}</td>
+                                                        <td>{{ $area->taluk_code }}</td>
+                                                        <td>
+                                                            <div class="action_container">
+                                                                <button class="view_btn" data-bs-target=".view_area_modal"
+                                                                    data-bs-toggle="modal" data-area-id={{ $area->id }}>
+                                                                    <i class="fas fa-eye"></i>
+                                                                </button>
+                                                                <button class="edit_btn" data-bs-target=".edit_area_modal"
+                                                                    data-bs-toggle="modal" data-area-id={{ $area->id }}>
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
+                                                                <button class="delete_btn" class="delete_btn"
+                                                                    data-area-id={{ $area->id }}>
+                                                                    <i class="fas text-danger fa-trash-alt"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
 
                                             </tbody>
@@ -114,7 +81,7 @@
                         <div class="col-lg-12">
                             <form action="create_area" method="post" id="add_area_form">
                                 @csrf
-                                <div class="zone-box">
+                                <div class="zone-box create-area-zone-box">
                                     <h3 class="my-3">District Infomation</h3>
                                     <div class="field_groups_district">
                                         <div class="row extra_fields position-relative">
@@ -152,11 +119,11 @@
                                             <div class="taluk_plus"><i class="fas fa-plus"></i></div>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary savearea">Save changes</button>
                                 </div>
                             </form>

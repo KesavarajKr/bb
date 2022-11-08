@@ -57,11 +57,10 @@ Route::view("/", "pages.login");
 
 // Route for  createArea
 Route::get("/areas", [CreateAreaController::class, "index"]);
-Route::post("/create_area", [CreateAreaController::class, "store"]);
 
 // Route for  createZone
-Route::get("/create_zone", [CreateZoneController::class, "index"]);
-Route::post("/create_zone", [CreateZoneController::class, "store"]);
+Route::get("/zones", [CreateZoneController::class, "index"]);
+// Route::post("/create_zone", [CreateZoneController::class, "store"]);
 
 
 // Success Zone Creation

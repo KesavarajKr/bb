@@ -424,12 +424,15 @@ header .navbar ul li a {
 }
 
 .modal-body .zone-box {
-    margin: 0 50px;
-    border: 1px solid #d9d9d980;
+    margin: 0 50px 20px;
     border-bottom: none !important;
     border-radius: 11px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+.create-area-zone-box input {
+    text-transform: uppercase;
 }
 
 .modal-body .zone-box h3 {
