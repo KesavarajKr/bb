@@ -431,10 +431,6 @@ header .navbar ul li a {
     border-bottom-right-radius: 0;
 }
 
-.create-area-zone-box input {
-    text-transform: uppercase;
-}
-
 .modal-body .zone-box h3 {
     font-weight: 600;
 }
@@ -483,7 +479,7 @@ header .navbar ul li a {
     position: absolute;
     width: 30px;
     height: 30px;
-    bottom: 10px;
+    top: 35px;
     border-radius: 50%;
     text-align: center;
     line-height: 30px;
@@ -499,6 +495,11 @@ header .navbar ul li a {
 .zone-box .taluk_plus {
     right: 2px;
     background-color: #d9d9d9;
+}
+
+.action_container button {
+    display: inline-block;
+    margin-right: 20px;
 }
 
 .zone-box .remove_row,
@@ -598,7 +599,7 @@ header .navbar ul li a {
 
 .action_container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 

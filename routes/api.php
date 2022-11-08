@@ -3,8 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ApiDesignationController;
 use App\Http\Controllers\ApiZoneController;
-use App\Http\Controllers\CreateAreaController;
+use App\Http\Controllers\ApiCreateAreaController;
 use App\Http\Controllers\DrawingController;
 use App\Http\Controllers\EngineerController;
 use App\Http\Controllers\UserController;
@@ -48,56 +49,46 @@ Route::GET('deleteeng/{engid}', [EngineerController::class, 'deleteeng']);
 
 Route::POST('drawrequest', [DrawingController::class, 'drawrequest']);
 Route::POST('replydraw', [DrawingController::class, 'replydraw']);
-
 Route::POST('createUser', [UserController::class, 'createUser']);
 
 
 // To create Area
-Route::POST('createarea', [CreateAreaController::class, "createArea"]);
+Route::POST('createarea', [ApiCreateAreaController::class, "createArea"]);
 
 // To view Area
-Route::get('viewarea/{id}', [CreateAreaController::class, "viewArea"]);
-
+Route::get('viewarea/{id}', [ApiCreateAreaController::class, "viewArea"]);
 // TO Edit view area
-Route::get('editarea/{id}', [CreateAreaController::class, "editArea"]);
-
+Route::get('editarea/{id}', [ApiCreateAreaController::class, "editArea"]);
 // To View Area all
-Route::get("viewallarea", [CreateAreaController::class, "viewallarea"]);
-
+Route::get("viewallarea", [ApiCreateAreaController::class, "viewallarea"]);
 // ReRender table
-Route::POST("renderarea", [ApiController::class, "renderArea"]);
-
-
+Route::POST("renderarea", [ApiCreateAreaController::class, "renderArea"]);
 // To Update Area
-Route::post('updatearea/{id}', [CreateAreaController::class, "updateArea"]);
-
+Route::post('updatearea/{id}', [ApiCreateAreaController::class, "updateArea"]);
 // To Delete Area
-Route::post('deletearea/{id}', [CreateAreaController::class, "deleteArea"]);
+Route::post('deletearea/{id}', [ApiCreateAreaController::class, "deleteArea"]);
 
-
-
-// To create Area
+// Zone Api
 Route::POST('createzone', [ApiZoneController::class, "createZone"]);
+Route::post("getTaluk/{id}", [ApiZoneController::class, "getTaluk"]);
+Route::post("renderzone", [ApiZoneController::class, "renderZone"]);
+// To view zone
+Route::get('viewzone/{id}', [ApiZoneController::class, "viewZone"]);
+Route::post("getDistrict", [ApiZoneController::class, "getDistrict"]);
+// TO Edit view zone
+Route::post('editzone/{id}', [ApiZoneController::class, "editZone"]);
+// To Update zone
+Route::post('updatezone/{id}', [ApiZoneController::class, "updateZone"]);
+// To Delete Zone
+Route::post('deletezone/{id}', [ApiZoneController::class, "deleteZone"]);
 
 
 
 
-
-
-
-// To create Zone
-// Route::POST('createzone', [ApiController::class, "createzone"]);
-
-
-// // To view zone
-// Route::get('viewzone/{id}', [ApiController::class, "viewzone"]);
-
-
-// // To View All zone
-// Route::get("viewallzone", [ApiController::class, "viewallzone"]);
-
-// // To Update zone
-// Route::POST('updatezone/{id}', [ApiController::class, "updatezone"]);
-
-// // To Delete zone
-// Route::post('deletezone/{id}', [ApiController::class, "deletezone"]);
+//Desigation api
+Route::post("createdesignation", [ApiDesignationController::class, "createDesignation"]);
+Route::post("renderdesignation", [ApiDesignationController::class, "renderDesignation"]);
+Route::get('viewdesignation/{id}', [ApiDesignationController::class, "viewDesignation"]);
+Route::post('editdesignation/{id}', [ApiDesignationController::class, "editDesignation"]);
+Route::post('updatedesignation/{id}', [ApiDesignationController::class, "updateDesignation"]);
+Route::post('deletedesignation/{id}', [ApiDesignationController::class, "deleteDesignation"]);

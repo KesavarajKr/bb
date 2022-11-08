@@ -61,19 +61,13 @@ $(document).on("click", ".eye", function () {
     }
 });
 
-function removeErrorLabels() {
-    $(".just-validate-error-label").remove();
-}
-
-
-
-
 $(document).ready(function () {
-    $("#example").DataTable({
-        dom: "Bfrtip",
-        buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
-        aaSorting: [],
-    });
+    document.getElementById("example") &&
+        $("#example").DataTable({
+            dom: "Bfrtip",
+            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+            aaSorting: [],
+        });
 });
 
 $.ajaxSetup({
@@ -142,6 +136,3 @@ $(".saveuser").click(function () {
         });
     }
 });
-
-import "../js/createArea.js";
-import "../js/createZone.js";

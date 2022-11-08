@@ -1,5 +1,6 @@
 function dataTableReRender() {
     $("#example").DataTable().destroy();
+
     $("#example").DataTable({
         dom: "Bfrtip",
         buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
@@ -31,7 +32,6 @@ $(document).on("click", ".taluk_plus", function () {
     </div>
     `;
     $(".taluk_field_groups").append(html);
-
     addValidation(createAreaCounter);
     createAreaCounter++;
 });
@@ -59,9 +59,40 @@ $(document).on("click", ".taluk_remove_row", function () {
 });
 
 // Area page input validation
-if ($("#add_area_form").length) {
-    const areaValidation = new JustValidate("#add_area_form");
-    areaValidation
+
+const areaValidation = new JustValidate("#add_area_form");
+areaValidation
+    .addField(".district_name", [
+        {
+            rule: "required",
+            errorMessage: "This Field is required",
+        },
+    ])
+    .addField(".district_code", [
+        {
+            rule: "required",
+            errorMessage: "This Field is required",
+        },
+    ])
+    .addField(".taluk_name_input", [
+        {
+            rule: "required",
+            errorMessage: "This Field is required",
+        },
+    ])
+    .addField(".taluk_code_input", [
+        {
+            rule: "required",
+            errorMessage: "This Field is required",
+        },
+    ])
+    .onSuccess((event) => {
+        saveArea();
+    });
+
+function editAreaFormValidation(id) {
+    const editAreaValidation = new JustValidate("#edit_area_form");
+    editAreaValidation
         .addField(".district_name", [
             {
                 rule: "required",
@@ -87,7 +118,7 @@ if ($("#add_area_form").length) {
             },
         ])
         .onSuccess((event) => {
-            saveArea();
+            editFormSubmit(id);
         });
 }
 
@@ -112,94 +143,101 @@ function saveArea() {
             taluk_code: taluk_code,
         },
         success: function (data) {
-            if ($.isEmptyObject(data.error)) {
-                console.log(data);
-                document.getElementById("add_area_form").reset();
-                Swal.fire("Data Saved", "", "success").then((result) => {
-                    $.ajax({
-                        method: "POST",
-                        url: `api/renderarea`,
-                        success: function (data, textStatus, xhr) {
-                            console.log(xhr.status);
-                            $(".create_area_modal").modal("hide");
-                            $("#re_render").html(data);
-                            dataTableReRender();
-                            editBtnHandler();
-                            deleteBtnHandler();
-                        },
-                        error: function (data) {
-                            console.log(data);
-                        },
-                    });
+            document.getElementById("add_area_form").reset();
+            Swal.fire("Data Saved", "", "success").then((result) => {
+                $.ajax({
+                    method: "POST",
+                    url: `api/renderarea`,
+                    success: function (data, textStatus, xhr) {
+                        $(".create_zone_modal").modal("hide");
+                        $("#re_render").html(data);
+                        callAllHandlers();
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            title: "Something went wrong",
+                            text: data.responseJSON.message,
+                            icon: "warning",
+                        });
+                    },
                 });
-            } else {
-                printErrorMsg(data.error);
-            }
+            });
+        },
+        error: function (data) {
+            Swal.fire({
+                title: "Something went wrong",
+                text: data.responseJSON.message,
+                icon: "warning",
+            });
         },
     });
-
-    function printErrorMsg(msg) {
-        $.each(msg, function (key, value) {
-            console.log(key);
-            $("." + key + "_error").text(value);
-        });
-    }
 }
 
-$(".view_btn").on("click", function () {
-    const html = `
+function viewBtnHandler() {
+    $(".view_btn").on("click", function () {
+        const html = `
                         <div class="preloader_container">
                             <img src="assets/images/dashboard/preloader.gif" alt="preloader_logo">
                         </div>
     `;
-    $("#view_form_data").html(html);
-    const id = this.dataset.areaId;
-    $.ajax({
-        method: "GET",
-        url: `api/viewarea/${id}`,
-        success: function (data) {
-            setTimeout(() => {
-                $("#view_form_data").html(data);
-            }, 100);
-        },
-        error: function (data) {
-            console.log(data);
-        },
-    });
-});
-
-function editHandler(id) {
-    $(".editarea").on("click", function (e) {
-        const editFormEL = document.getElementById("edit_area_form");
-        const formdata = new FormData(editFormEL);
+        $("#view_form_data").html(html);
+        const id = this.dataset.areaId;
         $.ajax({
-            method: "POST",
-            url: `api/updatearea/${id}`,
-            data: formdata,
-            processData: false,
-            contentType: false,
+            method: "GET",
+            url: `api/viewarea/${id}`,
             success: function (data) {
-                Swal.fire("Area Updated", "", "success").then((result) => {
-                    $.ajax({
-                        method: "POST",
-                        url: `api/renderarea`,
-                        success: function (data) {
-                            $(".edit_area_modal").modal("hide");
-                            $("#re_render").html(data);
-                            dataTableReRender();
-                            editBtnHandler();
-                            deleteBtnHandler();
-                        },
-                        error: function (data) {
-                            console.log(data);
-                        },
-                    });
-                });
+                setTimeout(() => {
+                    $("#view_form_data").html(data);
+                }, 100);
             },
             error: function (data) {
-                console.log(data);
+                Swal.fire({
+                    title: "Something went wrong",
+                    text: data.responseJSON.message,
+                    icon: "warning",
+                });
             },
         });
+    });
+}
+viewBtnHandler();
+
+function editFormSubmit(id) {
+    const editFormEL = document.getElementById("edit_area_form");
+    const formdata = new FormData(editFormEL);
+    $.ajax({
+        method: "POST",
+        url: `api/updatearea/${id}`,
+        data: formdata,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            Swal.fire("Data Updated", "", "success").then((result) => {
+                $.ajax({
+                    method: "POST",
+                    url: `api/renderarea`,
+                    success: function (data) {
+                        $(".edit_area_modal").modal("hide");
+                        $("#re_render").html(data);
+                        callAllHandlers();
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            title: "Something went wrong",
+                            text: data.responseJSON.message,
+                            icon: "warning",
+                        });
+                    },
+                });
+            });
+        },
+        error: function (data) {
+            Swal.fire({
+                title: "Something went wrong",
+                text: data.responseJSON.message,
+                icon: "warning",
+            });
+        },
     });
 }
 
@@ -218,11 +256,15 @@ function editBtnHandler() {
             success: function (data) {
                 setTimeout(() => {
                     $("#edit_form_data").html(data);
-                    editHandler(id);
+                    editAreaFormValidation(id);
                 }, 200);
             },
             error: function (data) {
-                console.log(data);
+                Swal.fire({
+                    title: "Something went wrong",
+                    text: data.responseJSON.message,
+                    icon: "warning",
+                });
             },
         });
     });
@@ -258,22 +300,24 @@ function deleteBtnHandler() {
                                 url: `api/renderarea`,
                                 success: function (data) {
                                     $("#re_render").html(data);
-                                    dataTableReRender();
-                                    editBtnHandler();
-                                    deleteBtnHandler();
+                                    callAllHandlers();
                                 },
                                 error: function (data) {
-                                    console.log(data);
+                                    Swal.fire({
+                                        title: "Something went wrong",
+                                        text: data.responseJSON.message,
+                                        icon: "warning",
+                                    });
                                 },
                             });
                         });
                     },
                     error: function (data) {
-                        Swal.fire(
-                            "Deleted!",
-                            "Your file has been deleted.",
-                            "success"
-                        );
+                        Swal.fire({
+                            title: "Something went wrong",
+                            text: data.responseJSON.message,
+                            icon: "warning",
+                        });
                     },
                 });
             }
@@ -281,3 +325,10 @@ function deleteBtnHandler() {
     });
 }
 deleteBtnHandler();
+
+function callAllHandlers() {
+    editBtnHandler();
+    viewBtnHandler();
+    deleteBtnHandler();
+    dataTableReRender();
+}

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\CreateAreaController;
-use App\Http\Controllers\CreateZoneController;
+use App\Http\Controllers\ApiCreateAreaController;
+use App\Http\Controllers\ApiDesignationController;
+use App\Http\Controllers\ApiZoneController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ZoneCreationSuccess;
 use App\Http\Controllers\DrawingController;
@@ -56,15 +57,16 @@ Route::get("/dashboard", [DashboardController::class, "index"]);
 Route::view("/", "pages.login");
 
 // Route for  createArea
-Route::get("/areas", [CreateAreaController::class, "index"]);
+Route::get("/areas", [ApiCreateAreaController::class, "index"]);
+
 
 // Route for  createZone
-Route::get("/zones", [CreateZoneController::class, "index"]);
-// Route::post("/create_zone", [CreateZoneController::class, "store"]);
+Route::get("/zones", [ApiZoneController::class, "index"]);
+
+Route::get("designation", [ApiDesignationController::class, "index"]);
 
 
-// Success Zone Creation
-// Route::get("zone_creation_success", [ZoneCreationSuccess::class, "index"]);
+
 
 Route::view('dashboard', 'pages.dashboard');
 Route::view('users', 'pages.users');

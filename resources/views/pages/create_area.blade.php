@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Business Bench | Create Area')
+@section('title', 'Business Bench | Areas')
 @section('main-content')
     <section>
         <div class="container-fluid">
@@ -82,7 +82,7 @@
                             <form action="create_area" method="post" id="add_area_form">
                                 @csrf
                                 <div class="zone-box create-area-zone-box">
-                                    <h3 class="my-3">District Infomation</h3>
+                                    <h4 class="my-3">District Infomation</h4>
                                     <div class="field_groups_district">
                                         <div class="row extra_fields position-relative">
                                             <div class="col-lg-6">
@@ -99,7 +99,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h3 class="my-4">Taluk Infomation</h3>
+                                    <h4 class="my-4">Taluk Infomation</h4>
                                     <div class="taluk_field_groups">
                                         <div class="row extra_fields position-relative">
                                             <div class="col-lg-6">
@@ -180,6 +180,4 @@
         </div>
     </div>
 @endsection
-
-
 {{--  --}}

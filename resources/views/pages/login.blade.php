@@ -37,7 +37,7 @@
                                 <input type="password" name="password" placeholder="Password" class="login_password">
                                 <div class="eye"><i class="far fa-eye-slash"></i></div>
                             </div>
-                            <a href="/create_area">
+                            <a href="/dashboard">
                                 <button type="button" class="get_start">Get Started</button>
                             </a>
                         </div>
@@ -226,9 +226,8 @@
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/js/bootstrap_js/bootstrap.min.js') }}"></script>
     <script src="assets/js/aos.js"></script>
-
     <script type="module" src="assets/js/script.js"></script>
 
 
