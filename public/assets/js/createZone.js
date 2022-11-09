@@ -181,13 +181,13 @@ function addValidation(counter) {
         .addField(`.district_name_input_${counter}`, [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .addField(`.district_code_input_${counter}`, [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ]);
 }
@@ -201,19 +201,19 @@ zoneValidation
     .addField(".zone_id_input", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .addField(".district_code_input", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .addField(".district_name_input", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .onSuccess((event) => {
@@ -226,19 +226,19 @@ function editZoneFormValidation(id) {
         .addField(".zone_id_input", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .addField(".district_code_input", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .addField(".district_name_input", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .onSuccess((event) => {

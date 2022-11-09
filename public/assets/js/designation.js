@@ -4,7 +4,7 @@ designationValidation
     .addField(".designation_name", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .onSuccess((event) => {
@@ -231,7 +231,7 @@ function editFormValidator(id) {
         .addField(".designation_name", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .onSuccess((event) => {

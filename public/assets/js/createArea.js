@@ -173,13 +173,13 @@ function addValidation(counter) {
         .addField(`.taluk_name_input_${counter}`, [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .addField(`.taluk_code_input_${counter}`, [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ]);
 }
@@ -196,25 +196,25 @@ areaValidation
     .addField(".district_name", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .addField(".district_code", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .addField(".taluk_name_input", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .addField(".taluk_code_input", [
         {
             rule: "required",
-            errorMessage: "This Field is required",
+            errorMessage: "* This field is required",
         },
     ])
     .onSuccess((event) => {
@@ -227,25 +227,25 @@ function editAreaFormValidation(id) {
         .addField(".district_name", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .addField(".district_code", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .addField(".taluk_name_input", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .addField(".taluk_code_input", [
             {
                 rule: "required",
-                errorMessage: "This Field is required",
+                errorMessage: "* This field is required",
             },
         ])
         .onSuccess((event) => {
