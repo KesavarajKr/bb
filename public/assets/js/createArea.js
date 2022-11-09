@@ -148,8 +148,8 @@ function saveArea() {
                 $.ajax({
                     method: "POST",
                     url: `api/renderarea`,
-                    success: function (data, textStatus, xhr) {
-                        $(".create_zone_modal").modal("hide");
+                    success: function (data) {
+                        $(".create_area_modal").modal("hide");
                         $("#re_render").html(data);
                         callAllHandlers();
                     },

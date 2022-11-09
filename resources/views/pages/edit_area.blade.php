@@ -1,9 +1,9 @@
-<div class="row">
+<div class="row animi-container fallIn">
     <div class="col-lg-12">
         <form id="edit_area_form">
             @csrf
             <div class="zone-box">
-                <h3 class="my-3">District Infomation</h3>
+                <h4 class="my-3">District Infomation</h4>
                 <div class="field_groups_district">
                     <div class="row extra_fields position-relative">
                         <div class="col-lg-6">
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-                <h3 class="my-4">Taluk Infomation</h3>
+                <h4 class="my-4">Taluk Infomation</h4>
                 <div class="taluk_field_groups">
                     <div class="row extra_fields position-relative">
                         <div class="col-lg-6">

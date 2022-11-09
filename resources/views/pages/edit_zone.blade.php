@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row animi-container fallIn">
     <div class="col-lg-12">
         <form id="edit_zone_form">
             @csrf

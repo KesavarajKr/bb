@@ -88,6 +88,8 @@ function viewBtnHandler() {
     });
 }
 
+viewBtnHandler();
+
 function submitEditHandler(id) {
     const editFormEL = document.getElementById("edit_designation_form");
     const formdata = new FormData(editFormEL);

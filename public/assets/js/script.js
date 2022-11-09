@@ -1,5 +1,9 @@
 AOS.init(); // AOS Initialze
 
+$(window).load(function () {
+    $(".preloader").fadeOut("300");
+});
+
 // Sliders
 $(".content-slider").slick({
     dots: true,
@@ -136,3 +140,5 @@ $(".saveuser").click(function () {
         });
     }
 });
+
+

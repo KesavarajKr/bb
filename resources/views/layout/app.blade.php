@@ -19,6 +19,8 @@
 
 <body>
 
+    <div class="preloader"></div>
+
     @include('layout.navbar')
 
 

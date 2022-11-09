@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row animi-container fallIn">
     <div class="col-lg-12">
         <form method="post" id="view_designation_form">
             @csrf

@@ -58,8 +58,7 @@
                 <div class="col-lg-3 modal_popup_btn">
                     <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
                         data-bs-target=".create_zone_modal">
-                        <img src="/assets/images/dashboard/adduser.svg"
-                            class="img-fluid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create zone
+                        <img src="/assets/images/dashboard/adduser.svg" class="img-fluid create_btn_image">Create Zone
                     </button>
                 </div>
             </div>
