@@ -11,9 +11,8 @@
                     <ul>
                         <li><a href="javascript:;">Home</a></li>
                         <li><a href="javascript:;">Projects</a></li>
-                        <li><a href="{{ url('/zones') }}">Zones</a></li>
-                        <li><a href="javascript:;">Region</a></li>
                         <li><a href="{{ url('/areas') }}">Area</a></li>
+                        <li><a href="{{ url('/zones') }}">Zones</a></li>
                         <li><a href="javascript:;">Engineers</a></li>
                         <li><a href="/users">Users</a></li>
                         <li><a href="javascript:;">Clients</a></li>

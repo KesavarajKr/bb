@@ -1,12 +1,79 @@
 // Re render data tables
 function dataTableReRender() {
     $("#example").DataTable().destroy();
+
+    $("#example thead tr")
+        .clone(true)
+        .addClass("filters")
+        .appendTo("#example thead");
+
     $("#example").DataTable({
         dom: "Bfrtip",
         buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
         aaSorting: [],
+        orderCellsTop: true,
+        fixedHeader: true,
+        initComplete: function () {
+            const api = this.api();
+
+            // For each column
+            api.columns()
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    const cell = $(".filters th").eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    const title = $(cell).text();
+                    $(cell).html(
+                        '<input type="text" placeholder="Search ' +
+                            title +
+                            ' ..." />'
+                    );
+                    // On every keypress in this input
+                    $(
+                        "input",
+                        $(".filters th").eq(
+                            $(api.column(colIdx).header()).index()
+                        )
+                    )
+                        .off("keyup change")
+                        .on("change", function (e) {
+                            // Get the search value
+                            $(this).attr("title", $(this).val());
+                            var regexr = "({search})"; //$(this).parents('th').find('select').val();
+
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api.column(colIdx)
+                                .search(
+                                    this.value != ""
+                                        ? regexr.replace(
+                                              "{search}",
+                                              "(((" + this.value + ")))"
+                                          )
+                                        : "",
+                                    this.value != "",
+                                    this.value == ""
+                                )
+                                .draw();
+                        })
+                        .on("keyup", function (e) {
+                            e.stopPropagation();
+
+                            $(this).trigger("change");
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(
+                                    cursorPosition,
+                                    cursorPosition
+                                );
+                        });
+                });
+        },
     });
 }
+
 let createZoneCounter = 0;
 // Append fields
 $(document).on("click", ".zone_plus", async function () {
@@ -86,6 +153,32 @@ zoneValidation
     .onSuccess((event) => {
         saveZone();
     });
+
+function editZoneFormValidation(id) {
+    const editZoneValidation = new JustValidate("#edit_zone_form");
+    editZoneValidation
+        .addField(".zone_id_input", [
+            {
+                rule: "required",
+                errorMessage: "This Field is required",
+            },
+        ])
+        .addField(".district_code_input", [
+            {
+                rule: "required",
+                errorMessage: "This Field is required",
+            },
+        ])
+        .addField(".district_name_input", [
+            {
+                rule: "required",
+                errorMessage: "This Field is required",
+            },
+        ])
+        .onSuccess((event) => {
+            editZoneFormSubmit(id);
+        });
+}
 
 function saveZone() {
     const zone_id = $(".zone_id").val();
@@ -201,44 +294,43 @@ function viewBtnHandler() {
 }
 viewBtnHandler();
 
-function editHandler(id) {
-    $(".editzone").on("click", function (e) {
-        const editFormEL = document.getElementById("edit_zone_form");
-        const formdata = new FormData(editFormEL);
-        $.ajax({
-            method: "POST",
-            url: `api/updatezone/${id}`,
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                Swal.fire("Data Updated", "", "success").then((result) => {
-                    $.ajax({
-                        method: "POST",
-                        url: `api/renderzone`,
-                        success: function (data) {
-                            $(".edit_zone_modal").modal("hide");
-                            $("#re_render").html(data);
-                            callAllHandlers();
-                        },
-                        error: function (data) {
-                            Swal.fire({
-                                title: "Something went wrong",
-                                text: data.responseJSON.message,
-                                icon: "warning",
-                            });
-                        },
-                    });
+function editZoneFormSubmit(id) {
+    const editFormEL = document.getElementById("edit_zone_form");
+    const formdata = new FormData(editFormEL);
+    $.ajax({
+        method: "POST",
+        url: `api/updatezone/${id}`,
+        data: formdata,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            Swal.fire("Data Updated", "", "success").then((result) => {
+                $.ajax({
+                    method: "POST",
+                    url: `api/renderzone`,
+                    success: function (data) {
+                        $(".edit_zone_modal").modal("hide");
+                        $("#re_render").html(data);
+                        editZoneFormValidation(id);
+                        callAllHandlers();
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            title: "Something went wrong",
+                            text: data.responseJSON.message,
+                            icon: "warning",
+                        });
+                    },
                 });
-            },
-            error: function (data) {
-                Swal.fire({
-                    title: "Something went wrong",
-                    text: data.responseJSON.message,
-                    icon: "warning",
-                });
-            },
-        });
+            });
+        },
+        error: function (data) {
+            Swal.fire({
+                title: "Something went wrong",
+                text: data.responseJSON.message,
+                icon: "warning",
+            });
+        },
     });
 }
 
@@ -257,7 +349,7 @@ function editBtnHandler() {
             success: function (data) {
                 setTimeout(() => {
                     $("#edit_form_data").html(data);
-                    editHandler(id);
+                    editZoneFormValidation(id);
                 }, 200);
             },
             error: function (data) {

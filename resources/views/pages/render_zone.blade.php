@@ -15,10 +15,10 @@
                 <td>{{ $zone->district_code }}</td>
                 <td>
                     <div class="action_container">
-                        <button class="view_btn" data-bs-target=".view_zone_modal" data-bs-toggle="modal"
+                        {{-- <button class="view_btn" data-bs-target=".view_zone_modal" data-bs-toggle="modal"
                             data-zone-id={{ $zone->id }}>
                             <i class="fas fa-eye"></i>
-                        </button>
+                        </button> --}}
                         <button class="edit_btn" data-bs-target=".edit_zone_modal" data-bs-toggle="modal"
                             data-zone-id={{ $zone->id }}>
                             <i class="fas fa-edit"></i>

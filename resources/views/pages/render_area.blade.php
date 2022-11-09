@@ -17,10 +17,10 @@
                 <td>{{ $area->taluk_code }}</td>
                 <td>
                     <div class="action_container">
-                        <button class="view_btn" data-bs-target=".view_area_modal" data-bs-toggle="modal"
+                        {{-- <button class="view_btn" data-bs-target=".view_area_modal" data-bs-toggle="modal"
                             data-area-id={{ $area->id }}>
                             <i class="fas fa-eye"></i>
-                        </button>
+                        </button> --}}
                         <button class="edit_btn" data-bs-target=".edit_area_modal" data-bs-toggle="modal"
                             data-area-id={{ $area->id }}>
                             <i class="fas fa-edit"></i>

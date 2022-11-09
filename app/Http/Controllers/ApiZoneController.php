@@ -52,9 +52,9 @@ class ApiZoneController extends Controller
 
         foreach ($districtNames as $key => $district) {
             $area = new Zone();
-            $area->zone_id =  strtoupper($request->input("zone_id"));
-            $area->district_name = strtoupper($district);
-            $area->district_code = strtoupper($districtCodes[$key]);
+            $area->zone_id =  strtoupper(trim($request->input("zone_id")));
+            $area->district_name = strtoupper(trim($district));
+            $area->district_code = strtoupper(trim($districtCodes[$key]));
             array_push($data, $area);
             $area->save();
         }
@@ -63,8 +63,8 @@ class ApiZoneController extends Controller
     }
     public function getTaluk(Request $request, $id)
     {
-        $talukas = Area::where("district_name", $id)->get();
-        $options =  view("pages.get_taluk", ["talukas" => $talukas])->render();
+        $districtCodes = Area::where("district_name", $id)->get()->pluck("district_code")->unique();
+        $options =  view("pages.get_taluk", ["districtCodes" => $districtCodes])->render();
         return  $options;
     }
 
@@ -149,9 +149,9 @@ class ApiZoneController extends Controller
         }
 
         $data->update([
-            "zone_id" =>  strtoupper($request->input("zone_id")),
-            "district_name" => strtoupper($request->input("district_name")),
-            "district_code" => strtoupper($request->input("district_code")),
+            "zone_id" =>  strtoupper(trim($request->input("zone_id"))),
+            "district_name" => strtoupper(trim($request->input("district_name"))),
+            "district_code" => strtoupper(trim($request->input("district_code"))),
         ]);
         return $this->successResponse($data);
     }

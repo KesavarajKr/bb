@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Validation\ValidationException;
 use App\Models\Area;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class ApiCreateAreaController extends Controller
 {
+
 
     public function invalidId()
     {
@@ -31,6 +33,7 @@ class ApiCreateAreaController extends Controller
 
     public function index()
     {
+
         $areas  = Area::all()->sortByDesc("id");
 
 
@@ -40,6 +43,9 @@ class ApiCreateAreaController extends Controller
     //Create Area
     public function createArea(Request $request)
     {
+
+
+
         try {
             $request->validate([
                 'district_name' => 'required',
@@ -58,10 +64,10 @@ class ApiCreateAreaController extends Controller
 
         foreach ($talukNames as $key => $taluk) {
             $area = new Area();
-            $area->district_name =  strtoupper($request->input("district_name"));
-            $area->district_code = strtoupper($request->input("district_code"));
-            $area->taluk_name = strtoupper($taluk);
-            $area->taluk_code = strtoupper($talukCodes[$key]);
+            $area->district_name =  strtoupper(trim($request->input("district_name")));
+            $area->district_code = strtoupper(trim($request->input("district_code")));
+            $area->taluk_name = strtoupper(trim($taluk));
+            $area->taluk_code = strtoupper(trim($talukCodes[$key]));
             array_push($data, $area);
             $area->save();
         }
@@ -139,10 +145,10 @@ class ApiCreateAreaController extends Controller
             return $this->invalidId();
         }
         $data->update([
-            "district_name" =>  strtoupper($request->input("district_name")),
-            "district_code" => strtoupper($request->input("district_code")),
-            "taluk_name" => strtoupper($request->input("taluk_name")),
-            "taluk_code" => strtoupper($request->input("taluk_code")),
+            "district_name" =>  strtoupper(trim($request->input("district_name"))),
+            "district_code" => strtoupper(trim($request->input("district_code"))),
+            "taluk_name" => strtoupper(trim($request->input("taluk_name"))),
+            "taluk_code" => strtoupper(trim($request->input("taluk_code"))),
         ]);
 
         return $this->successResponse($data);

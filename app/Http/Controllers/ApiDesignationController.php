@@ -42,7 +42,7 @@ class ApiDesignationController extends Controller
             return  $this->validationInvalid($error->errors());
         }
         $data  = Designation::create([
-            "designation_name" => strtoupper($request->input("designation_name"))
+            "designation_name" => strtoupper(trim($request->input("designation_name")))
         ]);
         return $this->successResponse($data);
     }
@@ -96,7 +96,7 @@ class ApiDesignationController extends Controller
         }
 
         $data->update([
-            "designation_name" => strtoupper($request->input("designation_name")),
+            "designation_name" => strtoupper(trim($request->input("designation_name"))),
         ]);
         return $this->successResponse($data);
     }
