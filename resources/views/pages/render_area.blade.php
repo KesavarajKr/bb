@@ -1,4 +1,4 @@
-<table id="example" class="table table-striped" style="width:100%">
+<table id="areaexample" class="table table-striped" style="width:100%">
     <thead>
         <tr>
             <th>District Name</th>

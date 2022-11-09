@@ -4,14 +4,14 @@
     <section>
         <div class="container-fluid">
             <div class="row table_container">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <h4 class="section-heading">Area List</h4>
                     <div class="container">
                         <div class="row ">
                             <div class="col-lg-12">
                                 <div class="userdetails">
                                     <div class="table-responsive" id="re_render">
-                                        <table id="example" class="table display table-striped" style="width:100%">
+                                        <table id="areaexample" class="table display table-striped" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>District Name</th>

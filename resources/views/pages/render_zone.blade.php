@@ -1,4 +1,4 @@
-<table id="example" class="table table-striped" style="width:100%">
+<table id="zoneexample" class="table table-striped" style="width:100%">
     <thead>
         <tr>
             <th>Zone_ID</th>

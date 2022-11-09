@@ -4,14 +4,14 @@
     <section>
         <div class="container-fluid">
             <div class="row table_container">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <h4 class="section-heading">Zone List</h4>
                     <div class="container">
                         <div class="row ">
                             <div class="col-lg-12">
                                 <div class="userdetails">
                                     <div class="table-responsive" id="re_render">
-                                        <table id="example" class="table table-striped" style="width:100%">
+                                        <table id="zoneexample" class="table table-striped" style="width:100%">
                                             <thead>
                                                 <tr>
                                                     <th>Zone_ID</th>

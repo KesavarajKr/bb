@@ -6,7 +6,7 @@
                     <img src="assets/images/dashboard/business_bench_logo.svg" alt="">
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-9">
                 <div class="navbar">
                     <ul>
                         <li><a href="javascript:;">Home</a></li>
@@ -21,7 +21,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-1">
                 <div class="admin_logo">
                     <img src="" alt="">
                 </div>

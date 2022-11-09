@@ -24,12 +24,12 @@
                                                         <td>{{ $designation->designation_name }}</td>
                                                         <td>
                                                             <div class="action_container">
-                                                                <button class="view_btn"
+                                                                {{-- <button class="view_btn"
                                                                     data-bs-target=".view_designation_modal"
                                                                     data-bs-toggle="modal"
                                                                     data-designation-id={{ $designation->id }}>
                                                                     <i class="fas fa-eye"></i>
-                                                                </button>
+                                                                </button> --}}
                                                                 <button class="edit_btn"
                                                                     data-bs-target=".edit_designation_modal"
                                                                     data-bs-toggle="modal"

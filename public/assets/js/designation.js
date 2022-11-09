@@ -57,7 +57,7 @@ function dataTableReRender() {
     $("#example thead tr")
         .clone(true)
         .addClass("filters")
-        .prependTo("#example thead");
+        .appendTo("#example thead");
 
     $("#example").DataTable({
         dom: "Bfrtip",

@@ -67,76 +67,12 @@ $(document).on("click", ".eye", function () {
 
 $(document).ready(function () {
     document.getElementById("example") &&
-        $("#example thead tr")
-            .clone(true)
-            .addClass("filters")
-            .prependTo("#example thead");
-
-    document.getElementById("example") &&
         $("#example").DataTable({
             dom: "Bfrtip",
             buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
             aaSorting: [],
             orderCellsTop: true,
             fixedHeader: true,
-            initComplete: function () {
-                const api = this.api();
-
-                // For each column
-                api.columns()
-                    .eq(0)
-                    .each(function (colIdx) {
-                        // Set the header cell to contain the input element
-                        const cell = $(".filters th").eq(
-                            $(api.column(colIdx).header()).index()
-                        );
-                        const title = $(cell).text();
-                        $(cell).html(
-                            '<input type="text" placeholder="Search By ' +
-                                title +
-                                ' ..." />'
-                        );
-                        // On every keypress in this input
-                        $(
-                            "input",
-                            $(".filters th").eq(
-                                $(api.column(colIdx).header()).index()
-                            )
-                        )
-                            .off("keyup change")
-                            .on("change", function (e) {
-                                // Get the search value
-                                $(this).attr("title", $(this).val());
-                                var regexr = "({search})"; //$(this).parents('th').find('select').val();
-
-                                var cursorPosition = this.selectionStart;
-                                // Search the column for that value
-                                api.column(colIdx)
-                                    .search(
-                                        this.value != ""
-                                            ? regexr.replace(
-                                                  "{search}",
-                                                  "(((" + this.value + ")))"
-                                              )
-                                            : "",
-                                        this.value != "",
-                                        this.value == ""
-                                    )
-                                    .draw();
-                            })
-                            .on("keyup", function (e) {
-                                e.stopPropagation();
-
-                                $(this).trigger("change");
-                                $(this)
-                                    .focus()[0]
-                                    .setSelectionRange(
-                                        cursorPosition,
-                                        cursorPosition
-                                    );
-                            });
-                    });
-            },
         });
 });
 
