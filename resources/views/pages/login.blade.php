@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Bench Login</title>
+    
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/slick.css">
@@ -26,19 +27,22 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="login_box">
-                        <p>Get Started with <span>Login</span> </p>
+                    <form action="login" method="POST">
+                        <div class="login_box">
+                            <p>Get Started with <span>Login</span> </p>
 
-                        <div class="form-input">
-                            <input type="text" name="name" placeholder="User ID">
+                            <div class="form-input">
+                                <input type="text" name="email" placeholder="User ID">
+                            </div>
+                            <div class="form-input position-relative">
+                                <input type="password" name="password" placeholder="Password" class="login_password">
+                                <div class="eye"><i class="far fa-eye-slash"></i></div>
+                            </div>
+                            <a href="/dashboard">
+                                <button type="button" class="get_start">Get Started</button>
+                            </a>
                         </div>
-                        <div class="form-input position-relative">
-                            <input type="password" name="password" placeholder="Password" class="login_password">
-                            <div class="eye"><i class="far fa-eye-slash"></i></div>
-                        </div>
-
-                        <button class="get_start">Get Started</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -223,10 +227,9 @@
 
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/js/bootstrap_js/bootstrap.min.js') }}"></script>
     <script src="assets/js/aos.js"></script>
-
-    <script src="assets/js/script.js"></script>
+    <script type="module" src="assets/js/script.js"></script>
 
 
 </body>
