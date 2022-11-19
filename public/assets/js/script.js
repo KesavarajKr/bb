@@ -134,7 +134,6 @@ $(".saveuser").click(function () {
             }
         },
     });
-
     function printErrorMsg(msg) {
         $.each(msg, function (key, value) {
             console.log(key);
